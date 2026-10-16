@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const SUPABASE_URL = 'https://cfkpxrvinkcutbtqpufa.supabase.co';
+  const SUPABASE_URL = 'https://qwnkigorqsgugcctnfmj.supabase.co';
   const SESSION_KEY = 'lawyerCloudSession';
   const DIAGNOSTIC_KEY = 'lawyerCloudDiagnostic';
   const RELOGIN_KEY = 'lawyerCloudNeedsRelogin';

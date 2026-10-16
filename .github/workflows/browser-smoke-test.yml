@@ -22,6 +22,7 @@ jobs:
         run: |
           node tests/smoke.cjs
           node tests/sync.cjs
+          node tests/cloud-project-migration.cjs
           node tests/sync-recovery.cjs
           node tests/calendar-cloud-bridge.cjs
       - name: Prepare browser test runner
