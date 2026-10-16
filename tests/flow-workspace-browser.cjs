@@ -38,7 +38,7 @@ assert.match(await p.locator('.flow-command-results').innerText(),/Провер�
 await p.keyboard.press('Escape');
 for(const tab of ['today','tasks','projects','priorities']){
  await p.locator('#tabs [data-tab="'+tab+'"]').click();
- assert.ok(await p.locator('.flow-topbar').isVisible(),'topbar on '+tab);
+ assert.equal(await p.locator('.flow-topbar').count()>0,tab!=='priorities','redundant topbar removed only for priorities '+tab);
  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'desktop overflow '+tab);
 }
 await p.setViewportSize({width:390,height:844});
