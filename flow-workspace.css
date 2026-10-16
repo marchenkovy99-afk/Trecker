@@ -257,3 +257,15 @@ html.flow-ui .ref-row-main small{font-size:13px!important}
  .flow-board-view .lin-group{flex:0 0 min(82vw,320px);scroll-snap-align:start}
 }
 @media(prefers-reduced-motion:reduce){.flow-inspecting .app{transition:none}}
+
+
+/* Narrow-desktop header: retain accessible actions, never force page wider. */
+@media(min-width:761px) and (max-width:1179px){
+ .flow-topbar{gap:12px}
+ .flow-breadcrumb{flex:1;min-width:0}
+ .flow-header-actions{flex:0 0 auto;min-width:0}
+ .flow-command-trigger{min-width:44px;width:44px;height:44px;padding:0;justify-content:center}
+ .flow-command-trigger span,.flow-command-trigger kbd{display:none}
+ .flow-top-add{width:44px;height:44px;padding:0}
+ .flow-top-add span{display:none}
+}
