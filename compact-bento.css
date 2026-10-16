@@ -1,0 +1,275 @@
+/* Compact Bento experiment — additive, reversible design layer.
+   Does not alter persisted data, actions, navigation or editor behavior.
+   Applied after flow-workspace.css; desktop composition first, mobile kept usable. */
+
+html.flow-ui {
+  --compact-bg: #13141c;
+  --compact-panel: #20212d;
+  --compact-inset: #252634;
+  --compact-border: #373646;
+  --compact-text: #f0eef6;
+  --compact-muted: #aaa6bb;
+  --compact-accent: #ac9bff;
+}
+html.flow-ui, html.flow-ui body { background: var(--compact-bg); }
+html.flow-ui .page { background: var(--compact-bg); }
+
+/* Quiet navigation with tighter vertical rhythm. */
+html.flow-ui .flow-topbar {
+  min-height: 58px;
+  padding-block: 8px;
+  background: #191923;
+  border-bottom: 1px solid var(--compact-border);
+}
+html.flow-ui .flow-breadcrumb { gap: 8px; }
+html.flow-ui .flow-breadcrumb strong { font-size: 13px; font-weight: 600; }
+html.flow-ui .flow-breadcrumb > span:first-child { font-size: 12px; }
+html.flow-ui .flow-breadcrumb-arrow { font-size: 17px; }
+html.flow-ui .flow-command-trigger {
+  min-height: 36px; border-radius: 8px;
+  background: #222230; border-color: #3b394d;
+  font-size: 12px;
+}
+html.flow-ui .flow-top-add {
+  min-height: 36px; padding: 7px 13px; border-radius: 8px;
+  background: #8574e5; border-color: #a296e6; font-size: 12px;
+}
+
+/* Dashboard: asymmetrical 2-column Bento layout instead of 4 giant stacked tiles. */
+html.flow-ui .ref-body.ref-today-body {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 24px clamp(20px, 2.3vw, 32px) 34px;
+}
+html.flow-ui .flow-dashboard { gap: 16px; margin: 0 0 17px; }
+html.flow-ui .flow-daily-intro { gap: 16px; }
+html.flow-ui .flow-eyebrow {
+  color: #b7adcf; font-size: 10px; font-weight: 600; letter-spacing: .055em;
+}
+html.flow-ui .flow-daily-intro h2 {
+  margin: 5px 0 4px; font-size: 26px !important;
+  line-height: 1.2 !important; font-weight: 550 !important;
+}
+html.flow-ui .flow-daily-intro p {
+  margin: 0; color: var(--compact-muted); font-size: 12px;
+}
+html.flow-ui .flow-daily-add {
+  min-height: 35px; padding: 7px 12px;
+  background: #36304c; border: 1px solid #554b75;
+  border-radius: 8px; font-size: 12px;
+}
+html.flow-ui .flow-daily-add:hover { background: #494166; }
+
+/* More data per screen: small horizontal metric tiles with deliberate asymmetry. */
+html.flow-ui .flow-metrics { gap: 10px; }
+html.flow-ui .flow-metric {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20px;
+  grid-template-rows: 26px auto;
+  align-content: center;
+  align-items: center;
+  gap: 3px 7px;
+  min-height: 94px;
+  padding: 13px 15px;
+  background: var(--compact-panel);
+  border: 1px solid var(--compact-border);
+  border-radius: 10px;
+}
+html.flow-ui .flow-metric-icon {
+  grid-column: 2; grid-row: 1; justify-self: end;
+  color: #a89ddd; opacity: .88;
+}
+html.flow-ui .flow-metric-icon .icon { width: 17px; height: 17px; }
+html.flow-ui .flow-metric strong {
+  grid-column: 1; grid-row: 1; font-size: 25px;
+  line-height: 1; color: var(--compact-text);
+  font-variant-numeric: tabular-nums;
+}
+html.flow-ui .flow-metric > span:last-child {
+  grid-column: 1 / -1; grid-row: 2;
+  color: var(--compact-muted);
+  font-size: 11px; line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+html.flow-ui .flow-metric:nth-child(2) {
+  background: #292438;
+  border-color: #49415c;
+}
+html.flow-ui .flow-metric:nth-child(2) strong { color: #d1bdff; }
+
+/* Main task list becomes the visually dominant zone. */
+html.flow-ui .ref-today-body .ref-grid--single {
+  max-width: none;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+html.flow-ui .ref-today-body .ref-panel {
+  background: #1c1d28; border: 1px solid var(--compact-border);
+  border-radius: 11px; overflow: hidden;
+}
+html.flow-ui .ref-today-body .ref-panel-heading {
+  min-height: 51px; padding: 12px 17px;
+  background: #242432; border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid var(--compact-border);
+}
+html.flow-ui .ref-today-body .ref-panel-heading h3 {
+  font-size: 17px !important; letter-spacing: -.02em;
+  font-weight: 560;
+}
+html.flow-ui .ref-today-body .ref-panel-heading button {
+  color: #b8aff6; font-size: 11px; min-height: 30px;
+}
+html.flow-ui .ref-today-body .ref-row {
+  min-height: 63px; gap: 10px; padding: 11px 17px;
+  border-top-color: #343443;
+}
+html.flow-ui .ref-today-body .ref-row-main strong {
+  font-size: 14px !important; line-height: 1.35; font-weight: 550;
+}
+html.flow-ui .ref-today-body .ref-row-main small {
+  font-size: 11px !important; line-height: 1.35; margin-top: 3px;
+}
+html.flow-ui .ref-today-body .ref-empty {
+  min-height: 140px; padding: 27px 18px;
+}
+html.flow-ui .ref-today-body .ref-check {
+  width: 29px; height: 29px; flex: 0 0 29px;
+}
+
+/* Task workspace: restrained headings, dense readable rows and compact controls. */
+html.flow-ui .lin-heading {
+  min-height: 78px; padding-top: 19px; padding-bottom: 14px;
+}
+html.flow-ui .lin-heading h2 { font-size: 26px !important; }
+html.flow-ui .lin-groups { padding-top: 13px; }
+html.flow-ui .lin-group { margin-bottom: 14px; }
+html.flow-ui .lin-group-heading {
+  min-height: 43px; padding: 8px 14px;
+  border-radius: 9px 9px 0 0; background: #292735;
+}
+html.flow-ui .lin-group-heading strong { font-size: 14px !important; }
+html.flow-ui .lin-group-entries {
+  border-color: var(--compact-border); border-radius: 0 0 9px 9px;
+  background: #1c1d28;
+}
+html.flow-ui .lin-row.workspace-task-row:not(.drag-floating) {
+  padding-block: 10px; min-height: 61px;
+}
+html.flow-ui .lin-row.workspace-task-row .lin-title {
+  font-size: 14px !important; line-height: 1.38 !important;
+}
+html.flow-ui .lin-row.workspace-task-row .lin-meta {
+  font-size: 11px; margin-top: 3px;
+}
+html.flow-ui .lin-row.workspace-task-row .lin-tick {
+  width: 35px !important; height: 35px !important;
+}
+html.flow-ui .lin-row.workspace-task-row .lin-small-action {
+  min-height: 36px; min-width: 35px;
+}
+html.flow-ui .lin-toolbar .lin-tool { min-height: 35px; border-radius: 8px; }
+html.flow-ui .flow-view-select { padding-top: 7px; padding-bottom: 7px; }
+html.flow-ui .flow-view-selector button { min-height: 34px; }
+html.flow-ui .lin-listbar { min-height: 40px; }
+
+/* Cases: two-column workspace cards use available width instead of tall single rows. */
+html.flow-ui .ref-case-list { gap: 11px; margin-top: 14px; }
+html.flow-ui .ref-case-card {
+  min-width: 0; gap: 11px; padding: 14px 15px;
+  border: 1px solid var(--compact-border);
+  border-radius: 10px; background: #1e202a;
+}
+html.flow-ui .ref-case-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: #302b44; color: #b9aaff;
+}
+html.flow-ui .ref-case-main strong { font-size: 15px !important; line-height: 1.35; }
+html.flow-ui .ref-case-main span { font-size: 11px; line-height: 1.4; }
+html.flow-ui .ref-case-main small { margin-top: 5px; font-size: 10px; }
+html.flow-ui .ref-case-status {
+  border-radius: 999px; white-space: nowrap; font-size: 10px;
+}
+
+/* Preserve 3-pane editor, reduce overgenerous headers and sidebar padding. */
+html.flow-ui .ref-case-header { padding-block: 14px; }
+html.flow-ui .ref-context, html.flow-ui .ref-assistant { padding: 19px 17px; }
+html.flow-ui .ref-editor-heading { padding-block: 15px; }
+html.flow-ui .ref-editor { padding: 23px 25px; }
+
+/* Desktop composition; avoid changing DOM, tasks and storage. */
+@media (min-width: 1180px) {
+  html.flow-ui .ref-body.ref-today-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.72fr) minmax(280px, .88fr);
+    column-gap: 18px;
+    row-gap: 16px;
+    align-content: start;
+    align-items: start;
+  }
+  html.flow-ui .ref-today-body .flow-dashboard { display: contents; }
+  html.flow-ui .ref-today-body .flow-daily-intro {
+    grid-column: 1 / -1; grid-row: 1; padding-bottom: 3px;
+  }
+  html.flow-ui .ref-today-body .ref-grid {
+    grid-column: 1; grid-row: 2; min-width: 0;
+  }
+  html.flow-ui .ref-today-body .flow-metrics {
+    grid-column: 2; grid-row: 2; min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  html.flow-ui .ref-today-body .flow-metric { min-height: 105px; }
+  html.flow-ui .ref-case-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  html.flow-ui .ref-case-card { align-items: flex-start; }
+  html.flow-ui .ref-case-actions { align-self: center; }
+}
+@media (min-width: 1180px) and (max-width: 1350px) {
+  html.flow-ui .ref-today-body .flow-metric {
+    padding: 11px 12px; min-height: 104px;
+  }
+  html.flow-ui .ref-today-body .flow-metric > span:last-child { font-size: 10px; }
+}
+@media (min-width: 761px) and (max-width: 1179px) {
+  html.flow-ui .ref-body.ref-today-body { padding: 21px 24px; }
+  html.flow-ui .flow-metrics { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  html.flow-ui .flow-metric { min-height: 96px; }
+}
+/* Mobile remains vertically composed and touch friendly; never compress hit targets. */
+@media (max-width: 760px) {
+  html.flow-ui .flow-topbar { min-height: 57px; padding: 7px 14px; }
+  html.flow-ui .flow-command-trigger,
+  html.flow-ui .flow-top-add { min-height: 43px; height: 43px; }
+  html.flow-ui .ref-body.ref-today-body { padding: 17px 14px 24px; }
+  html.flow-ui .flow-dashboard { display: flex; gap: 13px; margin-bottom: 14px; }
+  html.flow-ui .flow-daily-intro { align-items: flex-start; }
+  html.flow-ui .flow-daily-intro h2 { font-size: 23px !important; }
+  html.flow-ui .flow-daily-intro p { font-size: 12px; }
+  html.flow-ui .flow-daily-add { min-height: 42px; }
+  html.flow-ui .flow-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+  html.flow-ui .flow-metric { min-height: 95px; padding: 11px 12px; }
+  html.flow-ui .flow-metric strong { font-size: 24px; }
+  html.flow-ui .ref-today-body .ref-panel-heading { padding: 11px 13px; }
+  html.flow-ui .ref-today-body .ref-panel-heading h3 { font-size: 16px !important; }
+  html.flow-ui .ref-today-body .ref-row { min-height: 62px; padding: 10px 13px; }
+  html.flow-ui .ref-today-body .ref-row-main strong { font-size: 14px !important; }
+  html.flow-ui .lin-heading h2 { font-size: 24px !important; }
+  html.flow-ui .lin-row.workspace-task-row:not(.drag-floating) { min-height: 62px; }
+  html.flow-ui .lin-row.workspace-task-row .lin-title { font-size: 15px !important; }
+  html.flow-ui .lin-row.workspace-task-row .lin-small-action { min-height: 40px; min-width: 38px; }
+  html.flow-ui .ref-case-list { grid-template-columns: minmax(0,1fr); }
+  html.flow-ui .ref-case-card { padding: 13px; }
+  html.flow-ui .ref-case-main strong { font-size: 15px !important; }
+  html.flow-ui .ref-case-header { padding-inline: 16px; }
+  html.flow-ui .ref-context, html.flow-ui .ref-assistant { padding: 19px 17px; }
+  html.flow-ui .ref-editor { padding: 20px 17px; }
+}
+@media(max-width:370px) {
+  html.flow-ui .flow-metric { padding: 10px; }
+  html.flow-ui .flow-metric > span:last-child { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.flow-ui .flow-metric,
+  html.flow-ui .ref-case-card { transition: none !important; }
+}
