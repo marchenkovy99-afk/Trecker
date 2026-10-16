@@ -137,7 +137,7 @@ function renderTasksLinear(){
     return '<section class="lin-group" data-status="'+status+'"><button type="button" class="lin-group-heading" data-lin-collapse="'+status+'" aria-expanded="'+expanded+'"><span class="lin-expand">'+(expanded?'⌄':'›')+'</span><span class="lin-group-icon '+status+'">'+iconStatus(status)+'</span><strong>'+label+'</strong><span class="lin-count">'+tasks.length+'</span></button>'+
       '<div class="lin-group-entries" '+(expanded?'':'hidden')+'>'+(tasks.map(taskItem).join('')||(expanded?'<div class="lin-empty">В этой группе пока нет задач</div>':''))+'</div></section>';
   });
-  page.innerHTML='<div class="lin-workspace"><header class="lin-heading"><div><p class="lin-crumb">Рабочее пространство / Задачи</p><h2>Активные задачи <span>'+active+'</span></h2></div><div class="lin-toolbar"><button type="button" class="lin-tool" data-ref-sync aria-label="Облачная синхронизация">'+glyph('cloud')+' Синхронизация</button><button type="button" class="lin-tool" data-lin-history>'+glyph('calendar')+' История</button><button type="button" class="lin-tool" data-lin-templates>'+glyph('note')+' Шаблоны</button><button type="button" class="lin-primary" data-ref-new-task>'+glyph('plus')+' Новая задача</button></div></header>'+
+  page.innerHTML='<div class="lin-workspace"><header class="lin-heading"><div><p class="lin-crumb">Рабочее пространство / Задачи</p><h2>Активные задачи <span>'+active+'</span></h2></div><div class="lin-toolbar"><button type="button" class="lin-tool" data-ref-sync aria-label="Облачная синхронизация">'+glyph('cloud')+' Синхронизация</button><button type="button" class="lin-tool" data-lin-templates>'+glyph('note')+' Шаблоны</button><button type="button" class="lin-primary" data-ref-new-task>'+glyph('plus')+' Новая задача</button></div></header>'+
     '<div class="lin-listbar"><div class="lin-filters">'+Object.entries(FILTERS).map(([key,label])=>'<button type="button" data-lin-filter="'+key+'" class="'+(key===activeFilter?'active':'')+'">'+esc(label)+'</button>').join('')+'</div><label class="lin-search">'+glyph('search')+'<input id="linSearch" type="search" value="'+esc(search)+'" placeholder="Поиск по задачам" aria-label="Поиск по задачам"></label></div>'+
     '<div class="lin-groups"><div id="activeTasks">'+sections.slice(0,3).join('')+'</div><div id="completedTasks">'+sections[3]+'</div></div>'+
     '<div class="lin-bottom"><details class="workspace-utilities"><summary>Экспорт и резервные копии</summary><div><button type="button" class="btn" id="csvBtn">Экспорт CSV</button><button type="button" class="btn" id="backupBtn">Резервная копия</button><button type="button" class="btn" id="restoreBtn">Восстановить</button></div></details><span>Сроки и ожидания сохраняются в существующих задачах</span></div></div>';
@@ -160,8 +160,25 @@ function syncSidebar(){
   document.querySelectorAll('.lin-side-filters [data-lin-filter]').forEach(el=>el.classList.toggle('active',state.tab==='tasks'&&el.dataset.linFilter===activeFilter));
 }
 const oldRender=render;
-render=function linearRender(){oldRender();addSidebar();syncSidebar();if(state.projectId)enhanceCase();else if(state.tab==='tasks')renderTasksLinear();};
+render=function linearRender(){
+  oldRender();
+  document.querySelector('.lin-side-filters')?.remove();
+  if(state.tab==='today'&&!state.projectId){
+    page.querySelector('.ref-grid .ref-panel:nth-child(2)')?.remove();
+    page.querySelector('.ref-grid')?.classList.add('ref-grid--single');
+    page.querySelector('.ref-priority-link')?.remove();
+  }
+  if(state.projectId)enhanceCase();
+  else if(state.tab==='tasks')renderTasksLinear();
+};
 globalThis.render=render;
+const originalSwitchTab=switchTab;
+switchTab=function weeklyOpenTab(tab){
+  if(tab==='priorities'&&state.tab!=='priorities')globalThis.resetPriorityWeek?.();
+  return originalSwitchTab(tab);
+};
+globalThis.switchTab=switchTab;
+
 function templateDialog(){
   if(document.getElementById('linTemplateDialog'))return;
   const element=document.createElement('section');element.className='overlay lin-dialog';element.id='linTemplateDialog';element.setAttribute('role','dialog');element.setAttribute('aria-modal','true');element.setAttribute('aria-labelledby','linTemplateTitle');element.setAttribute('aria-hidden','true');

@@ -1,0 +1,328 @@
+/* Source Serif 4: modern open-source editorial serif supporting Cyrillic.
+   Served from an allowed font origin; local serif fallback is intentional. */
+@font-face {
+  font-family:"Source Serif 4";
+  src:url("https://raw.githubusercontent.com/google/fonts/main/ofl/sourceserif4/SourceSerif4%5Bopsz%2Cwght%5D.ttf") format("truetype");
+  font-style:normal;
+  font-weight:200 900;
+  font-display:swap;
+}
+:root,[data-theme="dark"],[data-theme="light"]{
+  --lux-serif:"Source Serif 4","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --lux-ui:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  --lux-background:#111418;
+  --lux-card:#1b2027;
+  --lux-hairline:#373b42;
+  --lux-champagne:#d4bd98;
+  --lux-muted:#acb0b8;
+  --lux-ivory:#f2ede5;
+  --font:var(--lux-ui);
+}
+body{font-family:var(--lux-ui)}
+/* Remove duplicate secondary navigation. Data and existing shortcuts remain intact. */
+.lin-side-filters{display:none!important}
+.ref-grid--single{grid-template-columns:minmax(0,1fr)!important;max-width:970px}
+.ref-grid--single .ref-panel{border-color:#373c46;box-shadow:0 10px 42px rgb(0 0 0 / .12)}
+.ref-grid--single .ref-empty{padding:34px 24px;color:#b0b1b7;font-size:14px}
+.ref-grid--single .ref-empty strong{font-family:var(--lux-serif);font-size:21px;font-weight:500;color:var(--lux-ivory)}
+/* Consistent editorial headings and task/case descriptions. */
+.lin-heading h2,.ref-header h2,.workspace-page-head h2,.priority-page h2,
+.sheet h2,#taskSheetTitle,#projectSheetTitle,.ref-panel-heading h3{
+  font-family:var(--lux-serif);
+  font-weight:540;
+  letter-spacing:-.025em;
+  color:var(--lux-ivory);
+}
+.lin-heading h2{font-size:33px}
+.lin-title{font-family:var(--lux-serif);font-size:18px;line-height:1.36;font-weight:520;letter-spacing:-.011em}
+.ref-case-main strong,.ref-row-main strong{font-family:var(--lux-serif);font-size:17px;font-weight:560;letter-spacing:-.015em}
+.ref-header h2{font-size:34px}
+.ref-panel-heading h3{font-size:21px}
+.lin-heading,.ref-header{border-color:#343840}
+.tab{font-family:var(--lux-ui)}
+.tab.active{color:var(--lux-ivory)}
+.lin-primary,.btn.primary{background:#c7ae89!important;border-color:#dfc79f!important;color:#17191d!important}
+.lin-primary:hover,.btn.primary:hover{background:#dfc6a0!important}
+.ref-case-card,.lin-group-entries,.ref-panel{background:#1b2026;border-color:#343941}
+.lin-group-heading strong,.priority-zone h3{color:#e4e1dc}
+.lin-row.workspace-task-row{border-color:#33383e}
+.lin-row.workspace-task-row:hover{background:#262b32}
+/* The weekly calendar is one page and always contains seven days. */
+.priority-page{
+  width:100%;
+  max-width:none!important;
+  padding:34px clamp(20px,2.6vw,46px) 48px!important;
+}
+.priority-page-head{
+  align-items:center;
+  border-bottom:1px solid #343841;
+  padding-bottom:25px;
+  margin-bottom:24px!important;
+  gap:20px;
+}
+.priority-page .workspace-page-eyebrow{
+  color:var(--lux-champagne);
+  font-size:11px;
+  font-weight:720;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.priority-page-head h2{
+  font-size:clamp(36px,3.4vw,48px);
+  line-height:1.08;
+  margin:0 0 8px;
+}
+.priority-page .priority-range{margin:0;color:#b5b9c1;font-size:14px;letter-spacing:.01em}
+.priority-week-actions{display:flex;gap:9px;align-items:center;flex-wrap:nowrap}
+.priority-week-actions .btn{
+  min-height:44px;
+  border-radius:10px;
+  padding:10px 16px;
+  font-size:12px;
+  line-height:1.35;
+  border:1px solid #414751;
+  background:#232932;
+  color:#e1e1de;
+}
+.priority-week-actions .btn:first-child,.priority-week-actions .btn:last-child{
+  width:44px;height:44px;min-width:44px;padding:0;
+}
+.priority-week-actions .btn .icon{width:18px;height:18px}
+.priority-week-actions .btn.is-current-week{
+  background:#38352f;
+  border-color:#847154;
+  color:#e8d7ba;
+}
+.priority-board{
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(165px,1fr))!important;
+  width:100%;
+  min-width:0;
+  overflow-x:auto!important;
+  overflow-y:visible;
+  border:1px solid #373d46;
+  border-radius:16px;
+  background:#1c2027;
+  box-shadow:0 14px 44px rgb(0 0 0 / .14);
+  scroll-padding:0;
+  scrollbar-color:#596172 transparent;
+}
+.priority-day{
+  min-width:0;
+  min-height:570px;
+  padding:0 13px 20px;
+  background:#1b2027;
+  display:flex;
+  flex-direction:column;
+  border-left:1px solid #343941;
+}
+.priority-day:first-child{border-left:0}
+.priority-day+.priority-day{border-left:1px solid #343941}
+.priority-day.is-today{
+  background:linear-gradient(180deg,#302d2a 0%,#242528 17%,#1d2228 45%);
+  box-shadow:inset 0 3px 0 var(--lux-champagne);
+}
+.priority-day__head{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:128px;
+  gap:5px;
+  margin:0 -13px;
+  padding:21px 8px 18px;
+  border-color:#363a43;
+  text-align:center;
+}
+.priority-day__head strong{
+  color:#e5e1db;
+  font-family:var(--lux-serif);
+  font-size:19px;
+  font-weight:560;
+  letter-spacing:-.025em;
+  text-transform:none;
+  line-height:1.2;
+}
+.priority-day__head span{
+  color:#b9b8b7;
+  font-family:var(--lux-ui);
+  font-size:12px;
+  line-height:1.45;
+}
+.priority-day__today{
+  margin:5px auto 0;
+  padding:4px 9px;
+  border-radius:99px;
+  background:#4a4031;
+  border:1px solid #816e50;
+  color:#f2d9ad;
+  font:650 10px/1.4 var(--lux-ui);
+  font-style:normal;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.priority-zone{
+  display:flex;
+  flex-direction:column;
+  align-content:stretch;
+  gap:11px;
+  min-height:0;
+  padding:18px 0;
+}
+.priority-zone--main{min-height:205px}
+.priority-zone--other{min-height:175px;border-color:#343941}
+.priority-zone__head{gap:5px;align-items:center}
+.priority-zone h3{
+  margin:0;
+  font-family:var(--lux-ui);
+  font-weight:670;
+  font-size:11px;
+  letter-spacing:.04em;
+  text-transform:none;
+}
+.priority-add{
+  min-height:39px;
+  min-width:39px;
+  padding:6px 8px;
+  border-radius:8px;
+  border:1px solid #454c55;
+  background:#2b3038;
+  color:#e5e0d9;
+  font-family:var(--lux-ui);
+  font-size:11px;
+  font-weight:580;
+  letter-spacing:0;
+}
+.priority-add:hover,.priority-add:focus-visible{
+  color:var(--lux-champagne);
+  border-color:#a18a69;
+}
+.priority-zone-empty{
+  margin:0;
+  padding:20px 5px;
+  text-align:left;
+  color:#9ea6b1;
+  font-family:var(--lux-ui);
+  font-size:12px;
+  line-height:1.55;
+}
+.priority-card{
+  padding:14px 10px;
+  border:1px solid #424852;
+  border-radius:10px;
+  gap:8px 7px;
+  background:#252b34;
+  box-shadow:none;
+}
+.priority-zone--main .priority-card{border-left:2px solid #c6a978}
+.priority-card__main strong{
+  color:#f0ece7;
+  font-family:var(--lux-serif);
+  font-size:15px;
+  line-height:1.4;
+  font-weight:550;
+  overflow-wrap:anywhere;
+}
+.priority-card__main span{color:#b9bec7;font-size:11px}
+.priority-card__actions{gap:5px}
+.priority-card__actions button{
+  min-height:34px;
+  padding:6px 8px;
+  border:1px solid #49515b;
+  border-radius:7px;
+  font-size:10.5px;
+}
+.priority-drag-handle{width:30px;min-width:30px;min-height:40px;opacity:.8}
+.priority-picker-hint{font-size:12px}
+.priority-sheet .field input,.priority-sheet .field select,.priority-sheet .field textarea{font-size:16px!important}
+/* Tablet: seven real calendar days remain grouped in one week; board scrolls horizontally. */
+@media(min-width:761px) and (max-width:1180px){
+  .priority-page{padding:27px 24px 36px!important}
+  .priority-day{min-height:530px}
+  .priority-board{grid-template-columns:repeat(7,minmax(186px,1fr))!important}
+  .priority-page-head{flex-wrap:wrap}
+  .priority-week-actions{flex-wrap:nowrap}
+}
+/* Phone: one substantial day per swipe; current day is revealed on every visit. */
+@media(max-width:760px){
+  .priority-page{padding:23px 0 23px!important;max-width:100%!important;overflow-x:clip}
+  .priority-page-head{
+    padding:0 17px 20px;
+    margin-bottom:15px!important;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:17px;
+  }
+  .priority-page-head h2{font-size:38px}
+  .priority-page .priority-range{font-size:13px}
+  .priority-week-actions{width:100%;justify-content:space-between;gap:8px}
+  .priority-week-actions .btn{min-height:44px;padding:10px 13px;font-size:12px}
+  .priority-week-actions .btn:first-child,.priority-week-actions .btn:last-child{width:46px;min-width:46px;height:46px}
+  .priority-board{
+    display:flex!important;
+    gap:12px;
+    padding:2px 14px 16px;
+    margin:0;
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:14px;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+    background:transparent;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+  }
+  .priority-board::-webkit-scrollbar{height:3px}
+  .priority-day{
+    flex:0 0 calc(100vw - 42px);
+    width:calc(100vw - 42px);
+    max-width:calc(100vw - 42px);
+    min-width:0;
+    min-height:calc(100dvh - 295px);
+    border:1px solid #3c434d!important;
+    border-radius:16px;
+    padding:0 18px 26px;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    box-shadow:0 13px 34px rgb(0 0 0 / .16);
+    background:#1e232b;
+  }
+  .priority-day.is-today{border-color:#98815e!important;background:linear-gradient(180deg,#302e2a,#22262d 19%,#20252d)}
+  .priority-day__head{min-height:130px;margin:0 -18px;padding:24px 18px 16px}
+  .priority-day__head strong{font-size:29px}
+  .priority-day__head span{font-size:14px}
+  .priority-zone{padding:20px 0;gap:11px}
+  .priority-zone--main{min-height:175px}
+  .priority-zone--other{min-height:175px}
+  .priority-zone h3{font-size:13px}
+  .priority-add{min-height:44px;min-width:72px;padding:9px 12px;font-size:12px}
+  .priority-card{padding:16px 13px}
+  .priority-card__main strong{font-size:17px}
+  .priority-card__actions button{min-height:42px;font-size:12px;padding:8px 10px}
+  .priority-zone-empty{font-size:13px;padding:19px 6px;color:#aab0ba}
+  #tabs.tabs{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  #tabs .tab{min-width:0;min-height:59px;font-size:11px;line-height:1.15;gap:4px;justify-content:center}
+  #tabs .tab span:not(.count){white-space:nowrap;font-size:11px;letter-spacing:-.025em}
+  #tabs .tab .icon{width:19px;height:19px}
+  #tabs [data-tab="priorities"]{color:#d5c0a1}
+  #tabs [data-tab="priorities"].active{color:#f4dec1}
+  .ref-header h2,.lin-heading h2{font-size:28px}
+  .lin-title{font-size:17px}
+  .ref-panel-heading h3{font-size:19px}
+  .ref-row-main strong,.ref-case-main strong{font-size:16px}
+  .lin-toolbar .lin-tool,.lin-toolbar .lin-primary{font-family:var(--lux-ui)}
+  input,textarea,select,[contenteditable="true"],.priority-sheet input,.priority-sheet select,.priority-sheet textarea{font-size:16px!important}
+}
+/* Visual comfort on very narrow phones without requiring browser zoom. */
+@media(max-width:375px){
+  .priority-day{flex-basis:calc(100vw - 35px);width:calc(100vw - 35px);max-width:calc(100vw - 35px);padding:0 13px 22px}
+  .priority-day__head{margin-inline:-13px}
+  #tabs .tab span:not(.count){font-size:10.5px}
+  .priority-page-head h2{font-size:34px}
+}

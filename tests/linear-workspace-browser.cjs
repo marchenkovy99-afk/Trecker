@@ -45,9 +45,7 @@ const server=http.createServer(async(req,res)=>{
     assert.equal(added.nextStep,'Получить комментарии коллег');
     await page.locator('.lin-filters [data-lin-filter="waiting"]').click();
     assert.match(await page.locator('.lin-workspace').innerText(),/Юридический департамент/);
-    await page.locator('.lin-toolbar [data-lin-history]').click();
-    assert.match(await page.locator('#linHistoryDialog').innerText(),/История/i);
-    await page.locator('[data-lin-close-history]').click();
+    assert.equal(await page.locator('.lin-toolbar [data-lin-history]').count(),0,'History no longer appears as an independent section');
     await page.setViewportSize({width:390,height:844});
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'mobile should have no horizontal overflow');
     assert.equal(errors.length,0,'no browser script errors: '+errors.join(' | '));

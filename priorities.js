@@ -348,32 +348,31 @@
     });
   }
 
+  function resetPriorityWeek() {
+    weekAnchor = startOfWeek(new Date());
+    rememberWeekAnchor();
+    revealTodayAfterRender = true;
+  }
+
   function revealCurrentPriorityDay() {
     if (!revealTodayAfterRender) return;
     revealTodayAfterRender = false;
     const currentDay = page.querySelector('.priority-day.is-today[aria-current="date"]');
-    if (!currentDay) return;
+    const board = page.querySelector('.priority-board');
+    if (!currentDay || !board) return;
+    if (window.innerWidth > 760) return;
 
-    if (window.innerWidth >= 900) {
-      currentDay.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'nearest' });
-      return;
-    }
-
-    const top = document.querySelector('.top');
-    const tabs = document.getElementById('tabs');
-
-    const centerInViewport = () => {
-      const topBottom = Math.max(0, top?.getBoundingClientRect().bottom || 0);
-      const bottomTop = Math.min(window.innerHeight, tabs?.getBoundingClientRect().top || window.innerHeight);
-      const availableHeight = Math.max(120, bottomTop - topBottom - 20);
+    // Move only the horizontal week carousel: never jump the entire
+    // document down the page or hide the page heading beneath the nav.
+    const reveal = () => {
+      if (!currentDay.isConnected || !board.isConnected) return;
       const dayRect = currentDay.getBoundingClientRect();
-      const documentTop = dayRect.top + window.scrollY;
-      const target = documentTop - topBottom - 10 - Math.max(0, availableHeight - dayRect.height) / 2;
-      window.scrollTo({ top: Math.max(0, target), left: 0, behavior: 'auto' });
+      const boardRect = board.getBoundingClientRect();
+      const left = Math.max(0, board.scrollLeft + dayRect.left - boardRect.left - 12);
+      board.scrollTo({ left, behavior: 'instant' });
     };
-
-    centerInViewport();
-    requestAnimationFrame(centerInViewport);
+    reveal();
+    requestAnimationFrame(reveal);
   }
 
   function renderPriorities() {
@@ -383,7 +382,7 @@
     const currentWeek = sameDay(weekAnchor, startOfWeek(today));
     page.innerHTML = `<section class="workspace-page priority-page">
       <header class="workspace-page-head priority-page-head">
-        <div><p class="workspace-page-eyebrow">План на неделю</p><h2>Приоритеты</h2><p>${esc(weekLabel(days))}</p></div>
+        <div><p class="workspace-page-eyebrow">Еженедельное планирование</p><h2>Приоритеты</h2><p class="priority-range">${esc(weekLabel(days))}</p></div>
         <div class="priority-week-actions" aria-label="Навигация по неделям">
           <button type="button" class="btn" data-priority-week="prev" aria-label="Предыдущая неделя"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"></use></svg></button>
           <button type="button" class="btn${currentWeek ? ' is-current-week' : ''}" data-priority-week="today" aria-pressed="${currentWeek}">Текущая неделя</button>
@@ -525,9 +524,7 @@
   tabs?.addEventListener('click', event => {
     const tab = event.target.closest('[data-tab]');
     if (tab?.dataset.tab !== 'priorities') return;
-    if (state.tab !== 'priorities') {
-      revealTodayAfterRender = sameDay(weekAnchor, startOfWeek(new Date()));
-    }
+    if (state.tab !== 'priorities') resetPriorityWeek();
   }, true);
 
   document.addEventListener('click', event => {
@@ -537,6 +534,7 @@
     }
   });
 
+  globalThis.resetPriorityWeek = resetPriorityWeek;
   globalThis.priorityTaskCount = priorityTaskCount;
   globalThis.renderPriorities = renderPriorities;
   globalThis.openPriorityPicker = openPriorityPicker;
