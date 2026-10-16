@@ -326,3 +326,143 @@ body{font-family:var(--lux-ui)}
   #tabs .tab span:not(.count){font-size:10.5px}
   .priority-page-head h2{font-size:34px}
 }
+
+
+/* Typographic unification, October 2026.
+   A single upright, Cyrillic-capable editorial serif across the entire app.
+   Distinct hierarchy is conveyed through size and weight, never font changes. */
+:root,[data-theme="dark"],[data-theme="light"]{
+  --app-typeface:"Source Serif 4","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --font:var(--app-typeface);
+  --lux-serif:var(--app-typeface);
+  --lux-ui:var(--app-typeface);
+  --workspace-ui-font:var(--app-typeface);
+}
+html,body,body *{font-family:var(--app-typeface)!important}
+body{
+  font-size:16px;
+  font-weight:400;
+  line-height:1.52;
+  font-synthesis:none;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  font-kerning:normal;
+}
+.brandname{
+  font-size:19px!important;
+  font-weight:650!important;
+  letter-spacing:-.018em!important;
+  line-height:1.25!important;
+}
+.tab{
+  font-size:15px!important;
+  line-height:1.35!important;
+  font-weight:540!important;
+  letter-spacing:0!important;
+  min-height:48px!important;
+}
+.tab.active{font-weight:650!important}
+.tab .count{
+  font-size:12px!important;
+  line-height:1.35!important;
+  font-weight:600!important;
+}
+.sidebar-bottom strong{font-size:14px!important;font-weight:610!important;line-height:1.35!important}
+.sidebar-bottom div>span{font-size:12px!important;line-height:1.4!important}
+.profile-avatar{font-size:14px!important}
+.ref-panel-heading h3{
+  font-size:23px!important;
+  font-weight:560!important;
+  line-height:1.27!important;
+  letter-spacing:-.02em!important;
+}
+.ref-panel-heading button{font-size:14px!important}
+.ref-row-main strong{
+  font-size:19px!important;
+  font-weight:560!important;
+  line-height:1.42!important;
+  letter-spacing:-.01em!important;
+}
+.ref-row-main small{font-size:14px!important;line-height:1.5!important}
+.ref-due{font-size:13px!important}
+.ref-empty{font-size:14px!important;line-height:1.65!important}
+.ref-header h2{font-size:35px!important;font-weight:550!important}
+.ref-header p{font-size:15px!important}
+.ref-case-main strong{font-size:19px!important;font-weight:565!important;line-height:1.35!important}
+.ref-case-main span{font-size:14px!important;line-height:1.5!important}
+.ref-case-main small{font-size:13px!important;line-height:1.45!important}
+.ref-case-status{font-size:12px!important}
+.ref-description,.ref-editor{font-size:16px!important;line-height:1.65!important}
+.lin-heading h2{font-size:36px!important;font-weight:560!important;line-height:1.18!important}
+.lin-heading h2 span{font-size:17px!important}
+.lin-crumb{font-size:13px!important}
+.lin-title{font-size:19px!important;font-weight:540!important;line-height:1.37!important;letter-spacing:-.008em!important}
+.lin-meta{font-size:13.5px!important;line-height:1.5!important;letter-spacing:0!important}
+.lin-next{font-size:14px!important;line-height:1.48!important}
+.lin-toolbar .lin-tool,.lin-toolbar .lin-primary{font-size:14px!important;font-weight:580!important}
+.lin-filters button{font-size:14px!important}
+.lin-group-heading{font-size:15px!important}
+.lin-group-heading strong{font-weight:615!important}
+.lin-count{font-size:12px!important}
+.lin-search input{font-size:15px!important}
+.lin-empty{font-size:14px!important}
+.lin-bottom,.lin-bottom button{font-size:13px!important}
+.lin-case-nextstep small{font-size:13px!important}
+.lin-case-nextstep strong{font-size:16px!important}
+.lin-case-nextstep button{font-size:14px!important}
+.lin-dialog-title h2,.sheet h2{font-size:25px!important;font-weight:560!important}
+.lin-dialog-subtitle,.lin-template-list strong{font-size:15px!important}
+.lin-template-list small,.lin-history-entry small{font-size:13px!important}
+.lin-history-entry strong{font-size:15px!important}
+.sheet .field label{font-size:14px!important;font-weight:570!important}
+.sheet .field input,.sheet .field select,.sheet .field textarea{font-size:16px!important;line-height:1.4!important}
+.sheet-actions .btn{font-size:15px!important}
+.workspace-page-head h2,.priority-page-head h2{font-weight:555!important;letter-spacing:-.025em!important}
+.priority-page .workspace-page-eyebrow{font-size:13px!important}
+.priority-page .priority-range{font-size:16px!important}
+.priority-week-actions .btn{font-size:14px!important}
+.priority-day__head strong{font-weight:550!important}
+.priority-day__head span{font-size:14px!important}
+.priority-zone h3{font-size:14px!important;font-weight:625!important}
+.priority-add{font-size:13px!important}
+.priority-card__main strong{font-size:17px!important;font-weight:545!important}
+.priority-card__main span,.priority-zone-empty{font-size:13px!important}
+.priority-card__actions button{font-size:12px!important}
+.priority-picker-hint,.priority-picker-task{font-size:14px!important}
+@media(max-width:760px){
+  .brandname{font-size:17px!important}
+  #tabs .tab{
+    min-width:0;
+    min-height:62px!important;
+    padding:9px 2px!important;
+    font-size:12.5px!important;
+    line-height:1.2!important;
+    font-weight:560!important;
+  }
+  #tabs .tab span:not(.count){
+    font-size:12px!important;
+    letter-spacing:-.012em!important;
+  }
+  #tabs .tab .count{font-size:10px!important}
+  .lin-heading h2{font-size:29px!important}
+  .lin-title{font-size:18px!important}
+  .lin-meta{font-size:12.5px!important}
+  .lin-toolbar .lin-tool{font-size:13px!important}
+  .lin-toolbar .lin-primary{font-size:15px!important}
+  .lin-filters button{font-size:13px!important}
+  .ref-header h2,.priority-page-head h2{font-size:32px!important}
+  .ref-panel-heading h3{font-size:21px!important}
+  .ref-row-main strong,.ref-case-main strong{font-size:18px!important}
+  .priority-day__head strong{font-size:29px!important}
+  .priority-week-actions .btn{font-size:14px!important}
+  .priority-zone h3{font-size:16px!important}
+  .priority-add{font-size:14px!important;min-height:44px}
+  .priority-card__main strong{font-size:18px!important}
+  .priority-card__actions button{font-size:13px!important}
+  input,select,textarea,[contenteditable="true"],.lin-search input,.sheet input,.sheet select,.sheet textarea{
+    font-size:16px!important;
+  }
+}
+@media(max-width:375px){
+  #tabs .tab span:not(.count){font-size:11.5px!important}
+}
