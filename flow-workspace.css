@@ -371,8 +371,8 @@ body:has(.priority-page) #fab{display:none!important}
   box-sizing:border-box!important;
  }
  html.flow-ui .priority-day{
-  box-sizing:border-box!important;flex:0 0 calc(100vw - 36px)!important;
-  width:calc(100vw - 36px)!important;max-width:calc(100vw - 36px)!important;
+  box-sizing:border-box!important;flex:0 0 100%!important;
+  width:100%!important;max-width:100%!important;
   min-height:0!important;height:auto!important;
   padding:0 13px 14px!important;border-radius:13px!important;overflow:hidden!important;
  }
@@ -395,7 +395,7 @@ body:has(.priority-page) #fab{display:none!important}
  html.flow-ui .priority-page .priority-add{min-height:40px!important;height:40px!important}
 }
 @media(max-width:360px){
- html.flow-ui .priority-day{flex-basis:calc(100vw - 40px)!important;width:calc(100vw - 40px)!important;max-width:calc(100vw - 40px)!important;padding-inline:11px!important}
+ html.flow-ui .priority-day{flex-basis:100%!important;width:100%!important;max-width:100%!important;padding-inline:11px!important}
  html.flow-ui .priority-day__head{margin-inline:-11px!important}
  html.flow-ui .priority-zone h3{font-size:12px!important}
  html.flow-ui .priority-page .priority-add{min-width:76px!important;padding-inline:7px!important;font-size:11.5px!important}
