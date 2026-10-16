@@ -54,7 +54,17 @@ const run=async()=>{
      await page.screenshot({path:path.join(shots,'premium-tasks-'+width+'.png'),fullPage:false});
    }
    await page.setViewportSize({width:390,height:844});
-   await page.locator('.lin-row .lin-row-body').first().click();
+   await page.locator('#tabs [data-tab="tasks"]').click();
+   const diagnostic=await page.evaluate(()=>{
+     const row=document.querySelector('.lin-row');
+     const group=row?.closest('.lin-group');
+     const entries=row?.closest('.lin-group-entries');
+     const box=row?.getBoundingClientRect();
+     return {rowCount:document.querySelectorAll('.lin-row').length,tab:document.querySelector('#tabs [aria-selected="true"]')?.dataset.tab,group:group?.dataset.status,expanded:group?.querySelector('.lin-group-heading')?.getAttribute('aria-expanded'),entriesHidden:entries?.hidden,entriesDisplay:entries?getComputedStyle(entries).display:null,rowDisplay:row?getComputedStyle(row).display:null,rowBox:box?{width:box.width,height:box.height,top:box.top}:null};
+   });
+   console.log('PREMIUM_MOBILE_ROW',JSON.stringify(diagnostic));
+   assert.ok(diagnostic.rowBox?.height>0,'at least one task row must stay visible after responsive transitions: '+JSON.stringify(diagnostic));
+   await page.locator('.lin-row .lin-row-body').first().click({timeout:5000});
    await page.locator('[data-task-detail-edit]').click();
    const form=await page.evaluate(()=>({font:getComputedStyle(document.querySelector('#task-title')).fontSize,label:getComputedStyle(document.querySelector('label[for="task-title"]')).fontSize,form:document.querySelector('#taskSheet .sheet').getBoundingClientRect().width,screen:innerWidth}));
    assert.ok(parseFloat(form.font)>=16,'mobile editor must not autozoom');
