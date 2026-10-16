@@ -46,7 +46,39 @@ for(const tab of ['today','tasks','projects','priorities']){
  await p.locator('#tabs [data-tab="'+tab+'"]').click();
  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'mobile overflow '+tab);
 }
+await p.locator('#tabs [data-tab="today"]').click();
+assert.equal(await p.locator('.flow-daily-intro h2,.flow-daily-intro p').count(),0,'redundant daily greeting and subtitle removed');
+assert.ok(await p.locator('.flow-eyebrow').isVisible(),'today still displays date label');
 await p.locator('#tabs [data-tab="tasks"]').click();
+assert.equal(await p.locator('.lin-expand svg path').count(),4,'group arrows are consistent SVG chevrons');
+const firstGroup=p.locator('.lin-group-heading').first();
+const initialExpansion=await firstGroup.getAttribute('aria-expanded');
+await firstGroup.click();
+assert.notEqual(await firstGroup.getAttribute('aria-expanded'),initialExpansion,'task group expands and collapses');
+await firstGroup.click();
+assert.equal(await firstGroup.getAttribute('aria-expanded'),initialExpansion,'task group is restored');
+const tidy=await p.evaluate(()=>{
+  const box=el=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};
+  const sync=box(document.querySelector('.lin-toolbar [data-ref-sync]'));
+  const tpl=box(document.querySelector('.lin-toolbar [data-lin-templates]'));
+  const list=box(document.querySelector('.flow-view-selector [data-flow-view="list"]'));
+  const board=box(document.querySelector('.flow-view-selector [data-flow-view="board"]'));
+  const search=box(document.querySelector('.lin-search'));
+  return {sync,tpl,list,board,search,width:innerWidth,scrollWidth:document.documentElement.scrollWidth};
+});
+assert.ok(tidy.sync.right+3<=tidy.tpl.left && Math.abs(tidy.sync.width-tidy.tpl.width)<=3,'equal secondary buttons do not overlap '+JSON.stringify(tidy));
+assert.ok(tidy.list.right+3<=tidy.board.left && Math.abs(tidy.list.width-tidy.board.width)<=3,'list and board segments aligned '+JSON.stringify(tidy));
+assert.ok(tidy.list.bottom<=tidy.search.top && tidy.board.bottom<=tidy.search.top,'view selector ends above search '+JSON.stringify(tidy));
+assert.ok(tidy.tpl.right<=tidy.width+1 && tidy.board.right<=tidy.width+1 && tidy.scrollWidth<=tidy.width+1,'no mobile control overflow');
+await p.locator('.lin-toolbar [data-ref-new-task]').click();
+const dateBoxes=await p.evaluate(()=>{
+  const a=document.querySelector('#task-actionDate'),b=document.querySelector('#task-dueDate'),sheet=document.querySelector('#taskSheet .sheet-fields');
+  const r=a.getBoundingClientRect(),s=b.getBoundingClientRect();
+  return {first:{left:r.left,right:r.right,top:r.top,bottom:r.bottom},second:{left:s.left,right:s.right,top:s.top,bottom:s.bottom},scroll:sheet.scrollWidth,client:sheet.clientWidth};
+});
+assert.ok(dateBoxes.first.bottom+4<=dateBoxes.second.top,'iOS date controls do not overlap '+JSON.stringify(dateBoxes));
+assert.ok(dateBoxes.scroll<=dateBoxes.client+1,'task form has no horizontal content overflow '+JSON.stringify(dateBoxes));
+await p.locator('#cancelTask').click();
 await p.locator('.lin-row [data-flow-inspect]').first().click();
 const dim=await p.locator('#flowInspector').evaluate(x=>{const r=x.getBoundingClientRect();return {width:r.width,left:r.left,right:r.right}});
 assert.ok(dim.left>=0&&dim.right<=391,'mobile detail sheet is within viewport '+JSON.stringify(dim));
