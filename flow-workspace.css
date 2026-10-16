@@ -395,7 +395,7 @@ body:has(.priority-page) #fab{display:none!important}
  html.flow-ui .priority-page .priority-add{min-height:40px!important;height:40px!important}
 }
 @media(max-width:360px){
- html.flow-ui .priority-day{flex-basis:calc(100vw - 32px)!important;width:calc(100vw - 32px)!important;max-width:calc(100vw - 32px)!important;padding-inline:11px!important}
+ html.flow-ui .priority-day{flex-basis:calc(100vw - 40px)!important;width:calc(100vw - 40px)!important;max-width:calc(100vw - 40px)!important;padding-inline:11px!important}
  html.flow-ui .priority-day__head{margin-inline:-11px!important}
  html.flow-ui .priority-zone h3{font-size:12px!important}
  html.flow-ui .priority-page .priority-add{min-width:76px!important;padding-inline:7px!important;font-size:11.5px!important}
