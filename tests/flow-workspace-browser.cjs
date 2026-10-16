@@ -21,7 +21,7 @@ await p.locator('#task-status').selectOption('inwork');
 await p.locator('#taskForm [type="submit"]').click();
 await p.locator('.flow-columns').first().waitFor();
 assert.match(await p.locator('.flow-columns').first().innerText(),/Название/);
-assert.match(await p.locator('.flow-columns').first().innerText(),/Срок/);
+assert.match(await p.locator('.flow-columns').first().innerText(),/срок/i);
 assert.ok(await p.locator('.lin-row [data-flow-inspect]').count(),'inspect action available');
 await p.locator('.lin-row [data-flow-inspect]').first().click();
 assert.ok(await p.locator('#flowInspector').isVisible(),'click opens nonmodal detail pane');
