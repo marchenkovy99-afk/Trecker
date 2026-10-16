@@ -158,7 +158,7 @@ const test = async () => {
 
     await page.locator('[data-set-priority]').first().click();
     assert.equal(await page.locator('#prioritySheet').getAttribute('aria-hidden'),'false');await close();
-    await tab('today');await page.locator('[data-ref-tab="priorities"]').click();
+    await tab('priorities');
     assert.ok(await page.locator('.priority-week').count() || await page.locator('.priority-day').count());
     log('standalone task edit and preserved weekly priorities');
 
