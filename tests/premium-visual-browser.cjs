@@ -51,6 +51,7 @@ const run=async()=>{
      assert.ok(geometry.tab.height>=42,'navigation touch target must be >=42 at '+width);
      assert.ok(Math.abs(geometry.heading.left-geometry.bar.left)<3&&Math.abs(geometry.bar.left-geometry.groups.left)<3,'major areas must share a single aligned container at '+width);
      assert.ok(geometry.row.left>=-1&&geometry.row.right<=width+1,'task rows within viewport at '+width);
+     assert.ok(geometry.row.height>45&&geometry.row.height<220,'task row height must remain compact and visible at '+width+': '+geometry.row.height);
      await page.screenshot({path:path.join(shots,'premium-tasks-'+width+'.png'),fullPage:false});
    }
    await page.setViewportSize({width:390,height:844});
