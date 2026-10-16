@@ -269,3 +269,134 @@ html.flow-ui .ref-row-main small{font-size:13px!important}
  .flow-top-add{width:44px;height:44px;padding:0}
  .flow-top-add span{display:none}
 }
+
+
+/* Compact weekly priorities: harmonize legacy mobile styles with the editorial theme. */
+html.flow-ui .priority-page{min-width:0;max-width:100%;box-sizing:border-box}
+html.flow-ui .priority-page .workspace-page-eyebrow{display:none!important}
+html.flow-ui .priority-page-head{
+  gap:13px!important;
+  padding-bottom:14px!important;
+  margin-bottom:13px!important;
+}
+html.flow-ui .priority-page-head h2{font-size:33px!important;line-height:1.13!important;margin:0 0 4px!important}
+html.flow-ui .priority-page .priority-range{font-size:14px!important;line-height:1.4!important}
+html.flow-ui .priority-week-actions{display:grid!important;grid-template-columns:42px minmax(0,1fr) 42px;gap:9px!important;align-items:center;width:100%;max-width:100%}
+html.flow-ui .priority-week-actions .btn{
+  width:auto;min-width:0;min-height:42px!important;height:42px!important;
+  border-radius:9px!important;font-size:12px!important;white-space:nowrap;
+}
+html.flow-ui .priority-week-actions .btn:first-child,
+html.flow-ui .priority-week-actions .btn:last-child{width:42px!important;min-width:42px!important;height:42px!important;padding:0!important}
+html.flow-ui .priority-day{min-width:0;box-sizing:border-box;overflow:hidden}
+html.flow-ui .priority-day__head{min-height:93px!important;padding-block:14px 12px!important}
+html.flow-ui .priority-day__head strong{font-size:19px!important;line-height:1.2!important;text-transform:capitalize!important;letter-spacing:-.02em!important}
+html.flow-ui .priority-day__head span{font-size:12px!important;line-height:1.35!important}
+html.flow-ui .priority-day__today{margin:3px auto 0!important;padding:3px 8px!important;font-size:10px!important}
+html.flow-ui .priority-zone{min-height:0!important;gap:9px!important;padding:14px 0!important}
+html.flow-ui .priority-zone--main,
+html.flow-ui .priority-zone--other{min-height:0!important}
+html.flow-ui .priority-zone__head{
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ gap:8px!important;align-items:center!important;width:100%!important;min-width:0!important;
+}
+html.flow-ui .priority-zone h3{
+ min-width:0!important;margin:0!important;font-size:13px!important;line-height:1.3!important;
+ font-weight:580!important;letter-spacing:0!important;text-transform:none!important;overflow-wrap:anywhere;
+}
+html.flow-ui .priority-page .priority-add{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ flex:0 0 auto!important;min-width:88px!important;width:auto!important;
+ max-width:100%!important;min-height:40px!important;height:40px!important;
+ margin:0!important;padding:8px 10px!important;border-radius:9px!important;
+ font-size:12px!important;line-height:1.2!important;font-weight:570!important;
+ white-space:nowrap!important;overflow:visible!important;
+}
+html.flow-ui .priority-page .priority-add::before{content:none!important;display:none!important}
+html.flow-ui .priority-zone__list{min-width:0;min-height:40px!important}
+html.flow-ui .priority-page .priority-zone-empty,
+html.flow-ui .priority-page .priority-zone--main .priority-zone-empty{
+ border:0!important;background:transparent!important;box-shadow:none!important;
+ padding:12px 3px!important;min-height:40px!important;font-size:12px!important;
+ line-height:1.4!important;text-align:left!important;color:#a8a6b7!important;
+}
+html.flow-ui .priority-page .priority-card{min-width:0;border-radius:10px;padding:12px 10px!important}
+html.flow-ui .priority-page .priority-card__main strong{font-size:15px!important;line-height:1.38!important}
+html.flow-ui .priority-page .priority-card__actions{display:flex!important;flex-wrap:wrap!important;gap:6px!important;min-width:0}
+html.flow-ui .priority-page .priority-card__actions button{
+ min-height:39px!important;flex:1 1 auto;font-size:12px!important;padding:7px 10px!important;
+ white-space:nowrap!important;min-width:0;max-width:100%;
+}
+html.flow-ui .priority-page .priority-card__main{min-width:0;overflow-wrap:anywhere}
+html.flow-ui .priority-page .priority-card__main span{font-size:12px!important}
+/* Fast transfer day chips in the existing safe, local-only editor. */
+.priority-quick-title{font-size:13px;line-height:1.35;color:#c9bfd9;font-weight:610}
+.priority-quick-days{
+ display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;min-width:0;
+ padding:2px 1px 8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
+ scrollbar-color:#6e5c95 transparent;
+}
+.priority-quick-day{
+ flex:0 0 53px;min-width:53px;min-height:58px;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;gap:3px;padding:6px 4px;
+ border:1px solid #55506b;background:#2b2739;color:#e0d7ee;
+ border-radius:10px;scroll-snap-align:start;line-height:1.2;
+}
+.priority-quick-day span{font-size:11px!important;font-weight:500}
+.priority-quick-day strong{font-size:16px!important;font-weight:650}
+.priority-quick-day.is-selected{border-color:#bca7ed;background:#493d70;color:#fff}
+.priority-quick-day:focus-visible{outline:2px solid #dac4ff;outline-offset:1px}
+/* The priority screen already has context-sensitive Add buttons. */
+body:has(.priority-page) #fab{display:none!important}
+@media(min-width:761px){
+ html.flow-ui .priority-page{padding-top:24px!important}
+ html.flow-ui .priority-day{min-height:415px!important}
+ html.flow-ui .priority-day__head{min-height:91px!important}
+ html.flow-ui .priority-zone{padding:13px 0!important}
+ html.flow-ui .priority-week-actions{width:auto;min-width:240px}
+}
+@media(max-width:760px){
+ html.flow-ui .priority-page{padding:12px 0 12px!important;overflow-x:clip}
+ html.flow-ui .priority-page-head{
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;
+  padding:0 14px 12px!important;gap:12px!important;margin:0 0 9px!important;
+ }
+ html.flow-ui .priority-page-head h2{font-size:27px!important;line-height:1.17!important}
+ html.flow-ui .priority-page .priority-range{font-size:13px!important}
+ html.flow-ui .priority-week-actions{grid-template-columns:42px minmax(0,1fr) 42px!important;gap:8px!important}
+ html.flow-ui .priority-board{
+  display:flex!important;gap:10px!important;padding:0 13px 10px!important;
+  margin:0!important;width:100%!important;max-width:100%!important;
+  overflow-x:auto!important;scroll-padding-inline:13px!important;
+  box-sizing:border-box!important;
+ }
+ html.flow-ui .priority-day{
+  box-sizing:border-box!important;flex:0 0 100%!important;
+  width:100%!important;max-width:100%!important;
+  min-height:0!important;height:auto!important;
+  padding:0 13px 14px!important;border-radius:13px!important;overflow:hidden!important;
+ }
+ html.flow-ui .priority-day__head{
+  margin:0 -13px!important;padding:11px 12px 10px!important;
+  min-height:72px!important;gap:3px!important;
+ }
+ html.flow-ui .priority-day__head strong{font-size:22px!important}
+ html.flow-ui .priority-day__head span{font-size:12px!important}
+ html.flow-ui .priority-zone{padding:12px 0!important;gap:7px!important}
+ html.flow-ui .priority-zone__head{grid-template-columns:minmax(0,1fr) auto!important}
+ html.flow-ui .priority-zone h3{font-size:13px!important}
+ html.flow-ui .priority-zone__list{min-height:34px!important}
+ html.flow-ui .priority-page .priority-zone-empty,
+ html.flow-ui .priority-page .priority-zone--main .priority-zone-empty{
+  font-size:12px!important;padding:9px 2px!important;min-height:34px!important;
+ }
+ html.flow-ui .priority-page .priority-card{padding:11px!important}
+ html.flow-ui .priority-page .priority-card__actions button{min-height:40px!important}
+ html.flow-ui .priority-page .priority-add{min-height:40px!important;height:40px!important}
+}
+@media(max-width:360px){
+ html.flow-ui .priority-day{flex-basis:100%!important;width:100%!important;max-width:100%!important;padding-inline:11px!important}
+ html.flow-ui .priority-day__head{margin-inline:-11px!important}
+ html.flow-ui .priority-zone h3{font-size:12px!important}
+ html.flow-ui .priority-page .priority-add{min-width:76px!important;padding-inline:7px!important;font-size:11.5px!important}
+}

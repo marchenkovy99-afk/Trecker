@@ -29,6 +29,8 @@ function topbar(){
  const crumbs={today:['Рабочее пространство','Сегодня'],tasks:['Мои задачи','Управление задачами'],projects:['Дела','Юридические запросы'],priorities:['Планирование','Неделя приоритетов']};
  const pair=crumbs[state.projectId?'projects':state.tab]||crumbs.today;
  const old=page.querySelector('.flow-topbar');old?.remove();
+ // Weekly priorities already has its own heading and dedicated calendar controls.
+ if(state.tab==='priorities'&&!state.projectId)return;
  const el=add('header','flow-topbar','<div class="flow-breadcrumb"><span>'+esc(pair[0])+'</span><span class="flow-breadcrumb-arrow">›</span><strong>'+esc(state.projectId?'Работа по делу':pair[1])+'</strong></div>'+
    '<div class="flow-header-actions"><button type="button" class="flow-command-trigger" data-flow-command>'+icon('search')+' <span>Поиск задач и дел</span><kbd>Ctrl K</kbd></button>'+
    '<button class="flow-top-add" type="button" data-ref-new-task>'+icon('plus')+'<span>Новая задача</span></button></div>');

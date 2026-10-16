@@ -35,6 +35,7 @@ const server=http.createServer(async(req,res)=>{
     await page.locator('[name="nextStep"]').fill('Получить комментарии коллег');
     await page.locator('[name="status"]').selectOption('waiting');
     await page.locator('#taskForm [type="submit"]').click();
+    await page.waitForFunction(()=>JSON.parse(localStorage.getItem('lawyerTasks')||'[]').some(x=>x.title==='Проверка нового порядка'),null,{timeout:5000});
     const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('lawyerTasks')||'[]'));
     const added=stored.find(x=>x.title==='Проверка нового порядка');
     assert.ok(added,'preset produces a saved task');
