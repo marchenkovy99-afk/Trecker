@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  const SUPABASE_URL = 'https://cfkpxrvinkcutbtqpufa.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_VAKzxSJ53hXxd4Tvk0FFlw_D_sNbFq9';
+  const SUPABASE_URL = 'https://qwnkigorqsgugcctnfmj.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_pmAp_voLq3GvpnSAeu4AIw_opSxTWXB';
   const SESSION_KEY = 'lawyerCloudSession';
   const DIAGNOSTIC_KEY = 'lawyerCloudDiagnostic';
   const inheritedFetch = globalThis.fetch.bind(globalThis);
