@@ -50,7 +50,7 @@ const test = async () => {
     assert.equal(await page.locator('#tabs [aria-selected="true"]').getAttribute('data-tab'),name,'active navigation must match the opened screen');
   };
   const openCase = async () => {await tab('projects');await page.locator('[data-ref-case]').first().click();};
-  const noOverflow = async () => assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'page must not overflow horizontally');
+  const noOverflow = async () => {const dim=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,tab:document.querySelector('#tabs [aria-selected="true"]')?.dataset.tab,over:[...document.querySelectorAll('body *')].filter(x=>x.getBoundingClientRect().right>innerWidth+2&&!x.hidden&&getComputedStyle(x).position!=='fixed').slice(0,5).map(x=>({class:x.className?.baseVal||x.className,tag:x.tagName,right:Math.round(x.getBoundingClientRect().right)}))}));assert.ok(dim.scroll<=dim.width+1,'page must not overflow horizontally '+JSON.stringify(dim));};
   const close = async () => {await page.keyboard.press('Escape');};
   await fs.mkdir(screenshotDir,{recursive:true});
   try {
@@ -171,7 +171,7 @@ const test = async () => {
     assert.equal((await stored('lawyerTasks')).length,1,'editing a case task must not create a root task');
     assert.ok((await stored('lawyerProjectTasks')).some(task=>task.title==='Проверить комплект документов: обновлено'));
     await tab('today');await page.keyboard.press('Control+k');
-    assert.ok(await page.locator('.ref-today-body').isVisible(),'removed global search must not reopen through a shortcut');
+    assert.ok(await page.locator('#flowCommand').isVisible(),'new command palette opens with Ctrl+K');await page.keyboard.press('Escape');
     // Removing the calendar UI must not delete previously stored events or their backup.
     await page.evaluate(()=>save(LS.calendarEvents,[{id:'retained-event',title:'Согласование позиции',date:'2026-10-20',startTime:'10:00',endTime:'11:00',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()}]));
     await page.evaluate(()=>{switchTab('calendar');switchTab('search');render();});

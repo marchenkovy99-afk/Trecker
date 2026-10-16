@@ -1,0 +1,271 @@
+/* Flow-inspired 2026 interface: icon rail, dark violet work surfaces, structured lists.
+   Single Source Serif 4 remains the global typeface per user's earlier request. */
+:root,[data-theme="dark"],[data-theme="light"]{
+  --bg:#14121c;--surface:#201e2a;--surface-raised:#282635;
+  --line:#363244;--line-strong:#48425d;--text:#f3f0f8;
+  --muted:#b7b1c5;--faint:#90899f;--accent:#8e7df5;
+  --accent-soft:#332b58;--blue:#9887ff;--blue-soft:#362b63;
+  --green:#88c3a8;--green-soft:#233b36;
+  --orange:#e2bf86;--orange-soft:#413325;
+  --radius-lg:12px;
+}
+html.flow-ui,html.flow-ui body{background:#14121c}
+html.flow-ui .app{min-width:0}
+html.flow-ui .page{min-width:0}
+.flow-logo{font-family:var(--app-typeface)!important;font-weight:700;font-size:24px;letter-spacing:-.06em;display:none}
+.flow-topbar{
+  min-height:71px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:13px clamp(17px,2.4vw,38px);
+  background:#1b1925;border-bottom:1px solid #333043;
+}
+.flow-breadcrumb{min-width:0;display:flex;align-items:center;gap:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flow-breadcrumb>span:first-child{color:#928a9e;font-size:13px}
+.flow-breadcrumb-arrow{color:#80778f;font-size:22px}
+.flow-breadcrumb strong{font-size:14px;overflow:hidden;text-overflow:ellipsis;font-weight:620}
+.flow-header-actions{display:flex;align-items:center;gap:10px;min-width:0}
+.flow-command-trigger{display:flex;align-items:center;gap:9px;min-width:225px;min-height:41px;padding:9px 12px;
+  color:#a7a0b5;background:#211e2c;border:1px solid #3f3952;border-radius:11px;text-align:left;font-size:13px}
+.flow-command-trigger:hover{border-color:#8473c7;color:#ded8ef}
+.flow-command-trigger .icon{width:17px;height:17px;flex:none}
+.flow-command-trigger span{white-space:nowrap}
+.flow-command-trigger kbd{font-size:10px;color:#9f93bf;border:1px solid #504961;border-radius:5px;margin-left:auto;padding:3px 5px;white-space:nowrap}
+.flow-top-add,.flow-daily-add{
+  min-height:41px;padding:10px 15px;border-radius:10px;border:1px solid #9886ef;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#7965df;color:#fff!important;
+  font-weight:590;font-size:13px;white-space:nowrap
+}
+.flow-top-add:hover,.flow-daily-add:hover{background:#947ff0}
+.flow-top-add .icon,.flow-daily-add .icon{width:16px;height:16px}
+/* Shared full-workspace composition */
+html.flow-ui .lin-heading{background:transparent;border-bottom:none;min-height:106px}
+html.flow-ui .lin-heading h2{font-size:32px!important}
+html.flow-ui .lin-crumb{color:#988da9;font-size:12px!important}
+html.flow-ui .lin-toolbar .lin-primary{background:#7965df!important;border-color:#9886ef!important;color:#fff!important}
+html.flow-ui .lin-toolbar .lin-primary:hover{background:#9784ef!important}
+html.flow-ui .lin-toolbar .lin-tool{background:#242131;border-color:#423b55}
+html.flow-ui .lin-filters button.active{background:#3c3261;border-color:#60528c;color:#f5f1fc}
+html.flow-ui .lin-listbar{border-color:#343043}
+html.flow-ui .lin-groups{max-width:none;padding-top:22px}
+html.flow-ui .lin-group-heading{background:#302c3e;border-radius:11px 11px 0 0;margin-bottom:0;padding:12px 17px;min-height:50px}
+html.flow-ui .lin-group-heading strong{font-size:16px!important;color:#efecf8;font-weight:620}
+html.flow-ui .lin-count{background:#7665d9;color:#fff;font-size:11px!important;font-weight:700;border-radius:16px;padding:3px 8px}
+html.flow-ui .lin-group{margin-bottom:19px}
+html.flow-ui .lin-group-entries{background:#211f2c;border:1px solid #393447;border-radius:0 0 12px 12px;overflow:hidden}
+html.flow-ui .lin-search{background:#282434;border-color:#494059}
+html.flow-ui .lin-title{font-size:17px!important;line-height:1.38!important}
+html.flow-ui .lin-group-icon.inwork{color:#b2a2ff}
+html.flow-ui .lin-row.workspace-task-row{border-color:#363143;background:transparent}
+html.flow-ui .lin-row.workspace-task-row:hover{background:#2d293c}
+html.flow-ui .lin-row.workspace-task-row .lin-tick{width:40px!important;height:40px!important}
+html.flow-ui .lin-row.workspace-task-row .lin-row-actions{display:flex!important;align-items:center;gap:3px}
+html.flow-ui .lin-row.workspace-task-row .lin-small-action{min-width:36px;min-height:38px}
+.flow-view-select{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:2px 38px 16px}
+.flow-view-selector{display:inline-flex;align-items:center;gap:4px;border:1px solid #3c344f;background:#22202d;border-radius:11px;padding:4px}
+.flow-view-selector button{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:8px 14px;color:#a7a0ba;border-radius:8px;font-size:13px}
+.flow-view-selector button.active{background:#e9e5f7;color:#28233d;font-weight:620}
+.flow-view-selector .icon{width:15px;height:15px}
+.flow-view-hint{font-size:12px;color:#938da5}
+html.flow-ui .lin-listbar{padding-top:12px}
+.flow-columns{
+  min-height:39px;display:grid;align-items:center;gap:13px;
+  grid-template-columns:44px minmax(155px,2fr) minmax(128px,1.3fr) 108px 100px 140px;
+  padding:8px 15px;border-bottom:1px solid #3d374d;color:#948ba9;font-size:12px
+}
+.flow-cell-check{opacity:.6;text-align:center}
+.flow-row-description{font-size:13px;color:#aaa5b8;overflow-wrap:anywhere;line-height:1.45}
+.flow-row-deadline{font-size:13px;color:#beb8ca}
+.flow-overdue{color:#f0a59d}
+.flow-row-priority{font-size:12px}
+.flow-priority-badge{display:inline-block;padding:5px 10px;border:1px solid #655e7b;border-radius:99px;color:#ccc5df;background:#302b3e;white-space:nowrap;font-size:12px}
+.flow-priority-high{border-color:#b47186;color:#f4adbf;background:#4a293c}
+.flow-priority-medium{border-color:#b89b57;color:#e6cf8b;background:#403725}
+.flow-priority-low{border-color:#578c79;color:#a1dcc5;background:#253f36}
+.flow-inspect-button{min-height:38px;min-width:38px;display:grid;place-items:center;border-radius:8px;color:#beb4db;background:#39334c;border:1px solid #514968}
+.flow-inspect-button:hover{background:#55467d;color:#f6f2ff}
+.flow-inspect-button .icon{width:16px;height:16px}
+@media(min-width:1180px){
+  html.flow-ui .lin-row.workspace-task-row{
+    display:grid!important;align-items:center!important;
+    grid-template-columns:44px minmax(155px,2fr) minmax(128px,1.3fr) 108px 100px 140px!important;
+    gap:13px!important;min-height:65px!important;padding:8px 15px!important
+  }
+  html.flow-ui .lin-row.workspace-task-row>.lin-row-body{width:100%!important;min-width:0!important;flex:none!important}
+  html.flow-ui .lin-row.workspace-task-row .lin-meta{display:none}
+  html.flow-ui .lin-row.workspace-task-row .lin-row-actions{width:auto!important;max-width:100%;min-width:0!important;padding:0!important;justify-content:flex-end!important;gap:3px!important}
+  html.flow-ui .lin-row.workspace-task-row .lin-small-action{width:38px;min-width:38px;max-width:38px;height:40px;min-height:40px}
+  html.flow-ui .lin-row.workspace-task-row .lin-state{display:none}
+}
+@media(min-width:761px) and (max-width:1179px){
+ .flow-columns{display:none}
+ .flow-row-description,.flow-row-deadline,.flow-row-priority{display:none}
+ .flow-inspect-button{width:40px;height:40px}
+}
+/* Kanban is a different presentation of exactly the same task records. */
+html.flow-ui .flow-board-view .lin-groups{
+ display:grid!important;grid-template-columns:repeat(4,minmax(215px,1fr));gap:15px;
+ align-items:start;max-width:none
+}
+html.flow-ui .flow-board-view #activeTasks{display:contents}
+html.flow-ui .flow-board-view #completedTasks{display:contents}
+html.flow-ui .flow-board-view .lin-group{min-width:0;margin:0}
+html.flow-ui .flow-board-view .flow-columns{display:none}
+html.flow-ui .flow-board-view .lin-group-entries{padding:9px;display:flex;flex-direction:column;gap:8px;border-radius:0 0 12px 12px}
+html.flow-ui .flow-board-view .lin-row.workspace-task-row{
+ display:flex!important;flex-wrap:wrap;align-items:flex-start!important;gap:9px!important;
+ border:1px solid #403950!important;border-radius:9px!important;background:#282431!important;
+ min-height:90px!important;padding:12px!important
+}
+html.flow-ui .flow-board-view .lin-row.workspace-task-row>.lin-row-body{width:calc(100% - 55px)!important;flex:1 1 calc(100% - 60px)!important}
+html.flow-ui .flow-board-view .lin-row.workspace-task-row .lin-meta{display:flex}
+html.flow-ui .flow-board-view .flow-row-description{display:block;width:100%;order:5}
+html.flow-ui .flow-board-view .flow-row-deadline{display:block;order:6;width:auto;flex:1}
+html.flow-ui .flow-board-view .flow-row-priority{display:block;order:7}
+html.flow-ui .flow-board-view .lin-row.workspace-task-row .lin-row-actions{order:8;width:100%!important;flex:1 1 100%!important;justify-content:flex-end!important}
+html.flow-ui .flow-board-view .lin-group-heading{border-radius:11px 11px 0 0}
+.flow-board-view .lin-empty{border:none}
+/* Icon rail on desktop, retaining native accessible button names and titles. */
+@media(min-width:1180px){
+ html.flow-ui .app{margin-left:91px!important}
+ html.flow-ui .top{
+   width:91px!important;min-width:91px;display:flex;align-items:center;flex-direction:column;
+   padding:24px 8px 19px!important;background:#16131f;border-right:1px solid #332c43
+ }
+ html.flow-ui .brandbar{padding:0!important;width:100%;display:flex;align-items:center;justify-content:center;gap:0!important;margin:0 0 38px!important}
+ html.flow-ui .brandname,html.flow-ui #themeToggle,html.flow-ui #sidebarCollapse{display:none!important}
+ html.flow-ui .sync-button{
+   display:flex!important;align-items:center;justify-content:center;
+   position:absolute;left:23px;bottom:83px;width:44px;height:44px;
+   min-width:44px;min-height:44px;padding:0;border-radius:12px;
+   background:#292337;border:1px solid #504565;color:#cfbfef
+ }
+ html.flow-ui .sync-button .icon{width:18px;height:18px}
+ html.flow-ui .sync-button #syncButtonText{display:none!important}
+ html.flow-ui .flow-logo{display:grid!important;place-items:center;width:42px;height:42px;border-radius:13px;background:#8e7af0;color:#f9f6ff;box-shadow:0 8px 21px #5136aa55}
+ html.flow-ui #tabs.tabs{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;padding:0;margin:0}
+ html.flow-ui #tabs .tab{display:flex;align-items:center;justify-content:center;min-height:51px!important;height:51px;width:55px;padding:0!important;border-radius:15px;color:#aaa2c1;background:#242031}
+ html.flow-ui #tabs .tab.active{background:#e9e7f1;color:#26213c;border-color:#e9e7f1}
+ html.flow-ui #tabs .tab .icon{width:21px;height:21px}
+ html.flow-ui #tabs .tab>span{display:none!important}
+ html.flow-ui .sidebar-bottom{margin-top:auto;width:100%;padding:17px 0 0;display:grid;place-items:center;border-color:#352e43}
+ html.flow-ui .sidebar-bottom>div{display:none}
+ html.flow-ui .profile-avatar{width:42px;height:42px}
+}
+.flow-dashboard{margin:0 0 27px;display:flex;flex-direction:column;gap:24px}
+.flow-daily-intro{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.flow-eyebrow{font-size:11px;color:#afa1d6;letter-spacing:.08em;font-weight:650;text-transform:uppercase}
+.flow-daily-intro h2{margin:9px 0 7px;font-size:33px!important;font-weight:570!important;line-height:1.15!important}
+.flow-daily-intro p{margin:0;color:#a7a1b5;font-size:15px}
+.flow-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.flow-metric{display:flex;flex-direction:column;gap:10px;padding:19px 20px;border:1px solid #3c354e;background:#242030;border-radius:12px;min-height:128px}
+.flow-metric-icon{display:inline-flex;color:#9d8ad5}
+.flow-metric-icon .icon{width:19px;height:19px}
+.flow-metric strong{font-size:27px;font-weight:550;color:#f6f3ff;line-height:1}
+.flow-metric>span:last-child{font-size:12px;color:#aaa4b8}
+html.flow-ui .ref-body.ref-today-body{max-width:none;padding:30px clamp(17px,2.4vw,38px)}
+html.flow-ui .ref-grid--single{max-width:none;grid-template-columns:1fr!important}
+html.flow-ui .ref-panel{background:#211e2b;border:1px solid #393349;border-radius:12px}
+html.flow-ui .ref-panel-heading{background:#302b40;border-radius:11px 11px 0 0}
+html.flow-ui .ref-panel-heading h3{color:#f3eff9;font-size:21px!important}
+html.flow-ui .ref-row{min-height:75px;border-color:#3b3548}
+html.flow-ui .ref-row-main strong{font-size:17px!important}
+html.flow-ui .ref-row-main small{font-size:13px!important}
+/* Inspector is non-destructive and opens next to active context on desktop. */
+.flow-inspector-veil[hidden],.flow-inspector[hidden],.flow-command[hidden]{display:none!important}
+.flow-inspector-veil{position:fixed;inset:0;background:#0c0912a1;z-index:145}
+.flow-inspector{
+ position:fixed;top:0;right:0;bottom:0;width:min(425px,95vw);z-index:146;overflow:auto;
+ padding:28px 28px 36px;background:#252131;border-left:1px solid #554866;box-shadow:-25px 0 80px #07050b8a;color:#f4f0fa
+}
+.flow-inspector-top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:23px}
+.flow-inspector-top [data-flow-close]{width:42px;height:42px;display:grid;place-items:center;border-radius:9px;border:1px solid #4b425c;color:#d8cfea}
+.flow-inspector h2{font-size:29px;line-height:1.3;margin:0 0 14px;font-weight:560;overflow-wrap:anywhere}
+.flow-inspector-description{font-size:14px;line-height:1.65;color:#c0b9d0;margin:0 0 23px;overflow-wrap:anywhere}
+.flow-inspector-properties{border-top:1px solid #443b54}
+.flow-inspector-properties>div{padding:13px 0;border-bottom:1px solid #40384f;display:grid;grid-template-columns:140px 1fr;gap:12px;font-size:13px}
+.flow-inspector-properties>div span{color:#a79ebc}
+.flow-inspector-properties>div strong{color:#f1eaf8;overflow-wrap:anywhere;font-weight:570}
+.flow-inspector-next{padding:21px 18px;margin-top:25px;background:#312b43;border:1px solid #493f61;border-radius:10px}
+.flow-inspector-next p{font-size:15px;line-height:1.5;margin:11px 0 0}
+.flow-inspector-footer{display:flex;gap:9px;margin-top:27px}
+.flow-inspector-footer button{min-height:44px;border-radius:10px;border:1px solid #554a68;padding:11px 14px;font-size:13px}
+.flow-inspector-footer button:first-child{background:#7965df;border-color:#937eef;color:#fff;flex:1}
+@media(min-width:1180px){
+ .flow-inspector-veil{background:transparent;pointer-events:none}
+ .flow-inspecting .app{margin-right:425px!important;transition:margin-right .14s ease}
+ .flow-inspecting .flow-inspector{width:425px}
+}
+/* Keyboard command search across existing local records. */
+.flow-command{position:fixed;inset:0;display:flex;align-items:flex-start;justify-content:center;z-index:210;background:#0d0a15c9;padding:10vh 16px 22px}
+.flow-command-box{width:min(650px,100%);max-height:78dvh;display:flex;flex-direction:column;background:#242031;border:1px solid #544969;box-shadow:0 25px 90px #090610bb;border-radius:17px;overflow:hidden}
+.flow-command-input{display:flex;align-items:center;gap:13px;border-bottom:1px solid #463b59;padding:18px}
+.flow-command-input .icon{width:20px;height:20px;color:#b6a5eb}
+.flow-command-input input{flex:1;background:transparent;border:0;outline:0;min-width:0;font-size:17px;color:#f7f1ff}
+.flow-command-input [data-flow-close-command]{min-width:42px;min-height:36px;color:#a9a1ba;border-radius:7px;background:#383147;font-size:12px}
+.flow-command-results{overflow:auto;padding:9px}
+.flow-command-results button{display:flex;align-items:center;gap:14px;width:100%;text-align:left;min-height:57px;padding:9px 13px;border-radius:10px;color:#f4eef9}
+.flow-command-results button:hover,.flow-command-results button:focus-visible{background:#413654}
+.flow-command-results button>span{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.flow-command-results button strong{font-size:15px;font-weight:570;overflow-wrap:anywhere}
+.flow-command-results button small{font-size:12px;color:#aaa1bd}
+.flow-command-results button>.icon{width:18px;height:18px;color:#9c8bce}
+.flow-command-empty{color:#a9a1bc;padding:22px}
+.flow-command-footnote{padding:12px 18px;border-top:1px solid #433a54;color:#958ba8;font-size:12px}
+/* Tablet: keep descriptive navigation, hide secondary table columns. */
+@media(min-width:761px) and (max-width:1179px){
+ html.flow-ui .lin-heading{padding-inline:24px}
+ .flow-view-select{padding-inline:24px}
+ html.flow-ui .lin-groups{padding-inline:24px}
+ .flow-topbar{padding-inline:24px}
+ .flow-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .flow-board-view .lin-groups{grid-template-columns:repeat(2,minmax(240px,1fr))!important}
+}
+/* Mobile is a dedicated composition: fixed bottom nav and responsive lists. */
+@media(max-width:760px){
+ html.flow-ui .top{background:#16131f}
+ .flow-topbar{min-height:60px;padding:10px 16px;gap:9px}
+ .flow-breadcrumb{gap:5px}
+ .flow-breadcrumb>span:first-child{display:none}
+ .flow-breadcrumb-arrow{display:none}
+ .flow-breadcrumb strong{font-size:14px}
+ .flow-header-actions{gap:6px}
+ .flow-command-trigger{min-width:42px;width:43px;height:43px;min-height:43px;padding:0;justify-content:center}
+ .flow-command-trigger span,.flow-command-trigger kbd{display:none}
+ .flow-top-add{width:43px;height:43px;min-width:43px;min-height:43px;padding:0}
+ .flow-top-add span{display:none}
+ .flow-view-select{padding:5px 14px 12px;gap:5px}
+ .flow-view-hint{display:none}
+ .flow-view-selector{width:100%;justify-content:center}
+ .flow-view-selector button{min-height:40px;flex:1;justify-content:center;font-size:13px}
+ .flow-columns,.flow-row-description,.flow-row-deadline,.flow-row-priority{display:none}
+ html.flow-ui .lin-row.workspace-task-row .lin-row-body{flex:1 1 0!important;width:0!important;min-width:0!important}
+ html.flow-ui .lin-row.workspace-task-row .lin-row-actions{flex:0 0 auto!important;width:auto!important;gap:2px!important}
+ .flow-inspect-button{width:37px;height:40px;min-width:37px}
+ .flow-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .flow-metric{min-height:105px;padding:14px}
+ .flow-metric strong{font-size:24px}
+ .flow-metric>span:last-child{font-size:11px}
+ .flow-daily-intro{align-items:flex-start;flex-direction:column;gap:13px}
+ .flow-daily-intro h2{font-size:27px!important}
+ .flow-daily-intro p{font-size:13px}
+ .flow-daily-add{min-height:44px;width:100%}
+ html.flow-ui .ref-body.ref-today-body{padding:19px 13px}
+ html.flow-ui .ref-panel-heading h3{font-size:19px!important}
+ .flow-inspector{left:0;right:0;top:auto;bottom:0;width:100%;max-width:100%;height:auto;max-height:83dvh;border-radius:19px 19px 0 0;border-left:0;border-top:1px solid #564b69;padding:24px 18px max(25px,env(safe-area-inset-bottom,0px))}
+ .flow-command{padding-top:8vh}
+ .flow-command-input input{font-size:16px!important}
+ .flow-board-view .lin-groups{display:flex!important;gap:11px;overflow-x:auto!important;scroll-snap-type:x mandatory;padding:12px!important}
+ .flow-board-view .lin-group{flex:0 0 min(82vw,320px);scroll-snap-align:start}
+}
+@media(prefers-reduced-motion:reduce){.flow-inspecting .app{transition:none}}
+
+
+/* Narrow-desktop header: retain accessible actions, never force page wider. */
+@media(min-width:761px) and (max-width:1179px){
+ .flow-topbar{gap:12px}
+ .flow-breadcrumb{flex:1;min-width:0}
+ .flow-header-actions{flex:0 0 auto;min-width:0}
+ .flow-command-trigger{min-width:44px;width:44px;height:44px;padding:0;justify-content:center}
+ .flow-command-trigger span,.flow-command-trigger kbd{display:none}
+ .flow-top-add{width:44px;height:44px;padding:0}
+ .flow-top-add span{display:none}
+}
