@@ -84,7 +84,7 @@ const dayKey=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d
   const chips=page.locator('#priorityForm [data-priority-quick-day]');
   assert.equal(await chips.count(),7,'seven one-touch calendar day choices in the transfer sheet');
   const currentDay=dayKey(new Date());
-  const otherDay=await chips.evaluateAll(nodes=>nodes.map(n=>n.dataset.priorityQuickDay).find(v=>v!=='${currentDay}')); 
+  const otherDay=await chips.evaluateAll((nodes,current)=>nodes.map(n=>n.dataset.priorityQuickDay).find(v=>v!==current),currentDay); 
   assert.ok(otherDay&&otherDay!==currentDay,'choose a different weekday');
   await page.locator('#priorityForm [data-priority-quick-day="'+otherDay+'"]').click();
   assert.ok(await page.evaluate(expected=>(JSON.parse(localStorage.getItem('lawyerTasks')||'[]').find(t=>t.title==='Приоритет на сегодняшний день')||{}).priorityDate===expected,otherDay),'quick transfer persists priorityDate to existing root task');
