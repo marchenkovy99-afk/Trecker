@@ -114,7 +114,16 @@
     prioritySheetTitle.textContent = entry.task.priorityDate ? 'Изменить приоритет' : 'Поставить приоритет';
     priorityForm.innerHTML = `<div class="sheet-fields">
       <p class="priority-picker-task">${esc(entry.task.title)}</p>
-      <div class="field"><label for="priorityDay">День</label><input id="priorityDay" name="priorityDate" type="date" required value="${esc(dateKey(chosenDate))}"></div>
+      <div class="priority-quick-title">Перенести на день этой недели</div>
+      <div class="priority-quick-days" role="group" aria-label="Быстрый перенос на день">
+        ${Array.from({ length: 7 }, (_, index) => {
+          const day = addDays(weekAnchor, index);
+          const key = dateKey(day);
+          const weekday = formatDay(day, { weekday: 'short' });
+          return `<button type="button" class="priority-quick-day${key === entry.task.priorityDate ? ' is-selected' : ''}" data-priority-quick-day="${key}" aria-label="Перенести на ${esc(formatDay(day,{ weekday:'long',day:'numeric',month:'long' }))}"><span>${esc(weekday)}</span><strong>${day.getDate()}</strong></button>`;
+        }).join('')}
+      </div>
+      <div class="field"><label for="priorityDay">Другая дата</label><input id="priorityDay" name="priorityDate" type="date" required value="${esc(dateKey(chosenDate))}"></div>
       <div class="field"><label for="priorityLevel">Зона</label><select id="priorityLevel" name="priorityLevel"><option value="main">Главное</option><option value="other">Остальные задачи</option></select></div>
       <p class="priority-picker-hint">Можно выбрать любой день недели.</p>
     </div><div class="sheet-actions">
@@ -462,6 +471,19 @@
   });
 
   priorityForm.addEventListener('click', event => {
+    const quick = event.target.closest('[data-priority-quick-day]');
+    if (quick) {
+      event.preventDefault();
+      const date = quick.dataset.priorityQuickDay;
+      if (!selectedTask || !fromDateKey(date)) return;
+      const priorityLevel = priorityForm.elements.priorityLevel?.value === 'other' ? 'other' : 'main';
+      if (!saveTask(selectedTask, { priorityDate: date, priorityLevel })) return;
+      selectedTask = null;
+      newTaskDefaults = null;
+      hideOverlay(prioritySheet);
+      render();
+      return;
+    }
     if (event.target.closest('[data-cancel-priority]')) {
       event.preventDefault();
       selectedTask = null;
