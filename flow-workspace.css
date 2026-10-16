@@ -92,7 +92,7 @@ html.flow-ui .lin-listbar{padding-top:12px}
   html.flow-ui .lin-row.workspace-task-row>.lin-row-body{width:100%!important;min-width:0!important;flex:none!important}
   html.flow-ui .lin-row.workspace-task-row .lin-meta{display:none}
   html.flow-ui .lin-row.workspace-task-row .lin-row-actions{width:auto!important;max-width:100%;min-width:0!important;padding:0!important;justify-content:flex-end!important;gap:3px!important}
-  html.flow-ui .lin-row.workspace-task-row .lin-small-action{width:32px;min-width:32px;max-width:32px}
+  html.flow-ui .lin-row.workspace-task-row .lin-small-action{width:38px;min-width:38px;max-width:38px;height:40px;min-height:40px}
   html.flow-ui .lin-row.workspace-task-row .lin-state{display:none}
 }
 @media(min-width:761px) and (max-width:1179px){
