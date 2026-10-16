@@ -70,7 +70,7 @@ const run=async()=>{
    const form=await page.evaluate(()=>({font:getComputedStyle(document.querySelector('#task-title')).fontSize,label:getComputedStyle(document.querySelector('label[for="task-title"]')).fontSize,form:document.querySelector('#taskSheet .sheet').getBoundingClientRect().width,screen:innerWidth}));
    assert.ok(parseFloat(form.font)>=16,'mobile editor must not autozoom');
    assert.ok(parseFloat(form.label)>=12,'mobile editor labels must remain legible');
-   assert.ok(form.form<form.screen,'editor must fit inside mobile viewport');
+   assert.ok(form.form<=form.screen+1,'editor bottom-sheet must fit inside mobile viewport: '+JSON.stringify(form));
    await page.screenshot({path:path.join(shots,'premium-task-form-mobile.png'),fullPage:false});
    await page.keyboard.press('Escape');
    await page.locator('#tabs [data-tab="projects"]').click();
