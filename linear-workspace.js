@@ -98,15 +98,21 @@ function meta(task){
 function taskItem(entry){
   const t=entry.task,pr=t.projectId?allProjects().find(p=>String(p.id)===String(t.projectId)):null;
   const reminder=t.status==='waiting'&&t.waitingReminderAt&&t.waitingReminderAt<=day();
-  const late=overdue(t);
+  const late=overdue(t),id=esc(attrs(t.id)),isCase=Boolean(t.projectId),done=t.status==='done';
   const info=meta(t);
-  return '<article class="lin-row'+(t.status==='done'?' is-done':'')+'" data-lin-row>'+
-    '<button class="lin-tick '+(t.status==='done'?'checked':'')+'" type="button" data-ref-toggle-task="'+esc(attrs(t.id))+'" data-key="'+esc(entry.key)+'" aria-label="'+(t.status==='done'?'Возобновить':'Завершить')+' задачу '+esc(t.title)+'">'+(t.status==='done'?glyph('check'):'')+'</button>'+
-    '<button class="lin-row-body" type="button" data-ref-task="'+esc(attrs(t.id))+'" data-key="'+esc(entry.key)+'"><span class="lin-title">'+esc(t.title)+'</span>'+
+  const toggle=isCase?('data-ref-toggle-task="'+id+'" data-key="'+esc(entry.key)+'"'):done?('data-restore-task="'+id+'"'):('data-done-task="'+id+'"');
+  const edit=isCase?('data-ref-task="'+id+'" data-key="'+esc(entry.key)+'"'):('data-edit-task="'+id+'"');
+  return '<article class="lin-row workspace-task-row'+(done?' is-done':'')+'" data-lin-row data-sort-id="'+id+'">'+
+    '<button class="lin-tick '+(done?'checked':'')+'" type="button" '+toggle+' aria-label="'+(done?'Вернуть в работу':'Завершить')+' задачу '+esc(t.title)+'">'+(done?glyph('check'):'')+'</button>'+
+    '<button class="lin-row-body" type="button" '+edit+'><span class="lin-title">'+esc(t.title)+'</span>'+
     (t.nextStep?'<span class="lin-next">'+esc(t.nextStep)+'</span>':'')+
     '<span class="lin-meta">'+(pr?'<span class="lin-project">'+esc(pr.title)+'</span>':'')+info.map(str=>'<span class="'+(str.startsWith('Проверить сейчас')||late&&str.startsWith('Срок')?'is-alert':'')+'">'+esc(str)+'</span>').join('')+'</span></button>'+
-    '<span class="lin-row-end"><span class="lin-state '+t.status+'">'+iconStatus(t.status)+'</span>'+(reminder?'<span class="lin-alert-dot" title="Время проверить ожидание"></span>':'')+'</span></article>';
+    '<div class="workspace-row-actions lin-row-actions">'+(!done&&!isCase?'<button class="lin-small-action" type="button" data-set-priority="'+id+'" data-task-scope="root" aria-label="Приоритет для задачи '+esc(t.title)+'">'+glyph('flag')+'</button>':'')+
+    (!isCase?'<button class="lin-small-action" type="button" data-edit-task="'+id+'" aria-label="Открыть задачу '+esc(t.title)+'">'+glyph('arrow-right')+'</button>':'')+
+    (done&&!isCase?'<button class="lin-small-action lin-restore" type="button" data-restore-task="'+id+'">Вернуть</button>':'')+
+    '<span class="lin-state '+t.status+'">'+iconStatus(t.status)+'</span>'+(reminder?'<span class="lin-alert-dot" title="Время проверить ожидание"></span>':'')+'</div></article>';
 }
+
 const groups=[['inwork','В работе'],['waiting','В ожидании'],['new','К выполнению'],['done','Завершено']];
 function filterBy(entry){
   const t=entry.task;
@@ -127,13 +133,13 @@ function renderTasksLinear(){
   const active=related().filter(x=>x.task.status!=='done').length;
   const sections=groups.map(([status,label])=>{
     const tasks=list.filter(x=>x.task.status===status).sort(order);
-    const expanded=activeFilter==='all'?groupOpen[status]:true;
+    const expanded=activeFilter==='all'?(status==='done'?Boolean(state.showCompleted):groupOpen[status]):true;
     return '<section class="lin-group" data-status="'+status+'"><button type="button" class="lin-group-heading" data-lin-collapse="'+status+'" aria-expanded="'+expanded+'"><span class="lin-expand">'+(expanded?'⌄':'›')+'</span><span class="lin-group-icon '+status+'">'+iconStatus(status)+'</span><strong>'+label+'</strong><span class="lin-count">'+tasks.length+'</span></button>'+
       '<div class="lin-group-entries" '+(expanded?'':'hidden')+'>'+(tasks.map(taskItem).join('')||(expanded?'<div class="lin-empty">В этой группе пока нет задач</div>':''))+'</div></section>';
-  }).join('');
+  });
   page.innerHTML='<div class="lin-workspace"><header class="lin-heading"><div><p class="lin-crumb">Рабочее пространство / Задачи</p><h2>Активные задачи <span>'+active+'</span></h2></div><div class="lin-toolbar"><button type="button" class="lin-tool" data-lin-history>'+glyph('calendar')+' История</button><button type="button" class="lin-tool" data-lin-templates>'+glyph('note')+' Шаблоны</button><button type="button" class="lin-primary" data-ref-new-task>'+glyph('plus')+' Новая задача</button></div></header>'+
     '<div class="lin-listbar"><div class="lin-filters">'+Object.entries(FILTERS).map(([key,label])=>'<button type="button" data-lin-filter="'+key+'" class="'+(key===activeFilter?'active':'')+'">'+esc(label)+'</button>').join('')+'</div><label class="lin-search">'+glyph('search')+'<input id="linSearch" type="search" value="'+esc(search)+'" placeholder="Поиск по задачам" aria-label="Поиск по задачам"></label></div>'+
-    '<div class="lin-groups">'+sections+'</div>'+
+    '<div class="lin-groups"><div id="activeTasks">'+sections.slice(0,3).join('')+'</div><div id="completedTasks">'+sections[3]+'</div></div>'+
     '<div class="lin-bottom"><button type="button" data-lin-native-backup>Экспорт и резервная копия</button><span>Сроки и ожидания сохраняются в существующих задачах</span></div></div>';
   const searchEl=document.getElementById('linSearch');if(searchEl)searchEl.addEventListener('input',()=>{const cursor=searchEl.selectionStart;search=searchEl.value;renderTasksLinear();const next=document.getElementById('linSearch');next?.focus();next?.setSelectionRange(cursor,cursor)});
 }
