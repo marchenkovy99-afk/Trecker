@@ -48,7 +48,7 @@ for(const tab of ['today','tasks','projects','priorities']){
 }
 await p.locator('#tabs [data-tab="today"]').click();
 assert.equal(await p.locator('.flow-daily-intro h2,.flow-daily-intro p').count(),0,'redundant daily greeting and subtitle removed');
-assert.ok(await p.locator('.flow-eyebrow').isVisible(),'today still displays date label');
+assert.ok(await p.locator('.flow-daily-intro .flow-eyebrow').isVisible(),'today still displays date label');
 await p.locator('#tabs [data-tab="tasks"]').click();
 assert.equal(await p.locator('.lin-expand svg path').count(),4,'group arrows are consistent SVG chevrons');
 const firstGroup=p.locator('.lin-group-heading').first();
