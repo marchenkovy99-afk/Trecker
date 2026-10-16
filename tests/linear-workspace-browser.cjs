@@ -43,7 +43,7 @@ const server=http.createServer(async(req,res)=>{
     assert.equal(added.waitingFor,'Юридический департамент');
     assert.equal(added.waitingReminderAt,'2026-10-18');
     assert.equal(added.nextStep,'Получить комментарии коллег');
-    await page.locator('[data-lin-filter="waiting"]').click();
+    await page.locator('.lin-filters [data-lin-filter="waiting"]').click();
     assert.match(await page.locator('.lin-workspace').innerText(),/Юридический департамент/);
     await page.locator('[data-lin-history]').click();
     assert.match(await page.locator('#linHistoryDialog').innerText(),/История/i);
