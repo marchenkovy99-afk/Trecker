@@ -63,7 +63,7 @@ const test = async () => {
     assert.equal(await page.locator('#releaseStyles').count(),1);
     assert.equal(await page.locator('#releaseWorkspace').count(),1);
     assert.ok(await page.locator('#tabs .icon').first().evaluate(el=>el.getBoundingClientRect().width)<=24);
-    assert.ok(await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily.includes('sans-serif')));
+    assert.ok(await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily.includes('Source Serif 4')));
     log('embedded mobile UI survives missing CSS and workspace JS asset requests');
     log('simplified startup, four working sections, marked blocks and logo absent, cloud button accessible');
 
