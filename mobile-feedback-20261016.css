@@ -1,0 +1,237 @@
+/* Mobile corrections requested 2026-10-16.
+   Loaded last; no changes to task data, sync or interaction handlers. */
+
+/* Contemporary disclosure affordance. The entire group header remains the click target. */
+html.flow-ui .lin-group-heading .lin-expand {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 28px;
+  flex: 0 0 24px;
+  line-height: 0;
+  color: #ada6c3;
+}
+html.flow-ui .lin-group-heading .lin-expand svg {
+  display: block;
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(0deg);
+  transition: transform 160ms ease, stroke 160ms ease;
+}
+html.flow-ui .lin-group-heading[aria-expanded="false"] .lin-expand svg {
+  transform: rotate(-90deg);
+}
+html.flow-ui .lin-group-heading:hover .lin-expand { color: #e0d8fa; }
+html.flow-ui .lin-group-heading > .lin-group-icon { flex: 0 0 19px; }
+html.flow-ui .lin-group-heading > strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+html.flow-ui .lin-group-heading > .lin-count { flex: 0 0 auto; }
+
+/* The redundant greeting is removed in JS; keep its date and add-task action concise. */
+html.flow-ui .flow-daily-intro { min-width: 0; }
+html.flow-ui .flow-daily-intro > div { min-width: 0; }
+html.flow-ui .flow-eyebrow { display: block; line-height: 1.45; }
+
+/* Form containment: date inputs have a large intrinsic width on iOS.
+   Explicit minmax and border-box prevent controls spilling into siblings. */
+#taskSheet .sheet-fields,
+#taskSheet .sheet-fields > .grid2,
+#taskSheet .sheet-fields .field { min-width: 0; }
+#taskSheet .sheet-fields > .grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+#taskSheet .sheet-fields .field > :is(input, textarea, select) {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+#taskSheet .sheet-fields input[type="date"] {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+#taskSheet .sheet-fields .field > label {
+  display: block;
+  max-width: 100%;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+#taskSheet .sheet-actions {
+  box-sizing: border-box;
+  min-width: 0;
+}
+#taskSheet .sheet-actions .btn {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  /* Greeting line followed directly by the add task button. */
+  html.flow-ui .flow-daily-intro {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding-bottom: 0;
+  }
+  html.flow-ui .flow-daily-intro .flow-eyebrow { font-size: 11px; letter-spacing: .02em; }
+  html.flow-ui .flow-daily-add {
+    width: 100%;
+    min-height: 43px;
+    margin: 0;
+  }
+  html.flow-ui .flow-dashboard { gap: 12px; margin-bottom: 14px; }
+
+  /* Exactly two equally sized secondary buttons, not a three-column grid. */
+  html.flow-ui .lin-heading { padding: 17px 16px 11px; gap: 12px; }
+  html.flow-ui .lin-toolbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+    gap: 8px;
+    align-items: stretch;
+  }
+  html.flow-ui .lin-toolbar > .lin-primary {
+    order: -1;
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    margin: 0;
+  }
+  html.flow-ui .lin-toolbar > .lin-tool {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 43px;
+    padding: 8px 7px;
+    gap: 6px;
+    border-radius: 9px;
+    font-size: 12px;
+    line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+  html.flow-ui .lin-toolbar > .lin-tool .icon { flex: 0 0 15px; }
+
+  /* A single well-aligned segmented toggle followed by search and filters. */
+  html.flow-ui .flow-view-select {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 3px 16px 9px;
+    gap: 0;
+  }
+  html.flow-ui .flow-view-selector {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 10px;
+  }
+  html.flow-ui .flow-view-selector > button {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    width: 100%;
+    min-height: 42px;
+    margin: 0;
+    padding: 8px 9px;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  html.flow-ui .flow-view-selector > button .icon { flex: 0 0 15px; }
+
+  html.flow-ui .lin-listbar {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 16px 13px;
+    gap: 11px;
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  html.flow-ui .lin-search {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 44px;
+  }
+  html.flow-ui .lin-search > input { min-width: 0; width: 100%; }
+  html.flow-ui .lin-filters {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+  }
+  html.flow-ui .lin-filters button { flex: 0 0 auto; }
+  html.flow-ui .lin-group-heading {
+    gap: 9px;
+    padding-inline: 12px;
+  }
+
+  /* One date per row on phones; prevents native iOS date picker overlap. */
+  #taskSheet .sheet-fields > .grid2:has(#task-actionDate) {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 13px;
+  }
+  #taskSheet .sheet-fields > .grid2:has(#task-waitingReminderAt) {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 13px;
+  }
+  #taskSheet .sheet-fields > .grid2 { max-width: 100%; }
+  #taskSheet .sheet-fields {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  #taskSheet .sheet-fields .field > :is(input, textarea, select) {
+    font-size: 16px !important;
+  }
+  #taskSheet .sheet-actions {
+    position: relative !important;
+    flex-shrink: 0;
+    margin-top: 0;
+    padding: 12px 3px max(10px, env(safe-area-inset-bottom, 0px)) !important;
+    background: #1e2125;
+    border-top: 1px solid var(--line);
+  }
+  #taskSheet .sheet-actions > button { min-height: 44px; }
+}
+@media (max-width: 390px) {
+  #taskSheet .sheet-fields > .grid2 { grid-template-columns: minmax(0, 1fr) !important; }
+  html.flow-ui .lin-toolbar > .lin-tool { font-size: 11.5px; gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.flow-ui .lin-group-heading .lin-expand svg { transition: none; }
+}
