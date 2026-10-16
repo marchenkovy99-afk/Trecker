@@ -35,9 +35,18 @@ const server=http.createServer(async(req,res)=>{
     await page.locator('[name="nextStep"]').fill('Получить комментарии коллег');
     await page.locator('[name="status"]').selectOption('waiting');
     await page.locator('#taskForm [type="submit"]').click();
+    const debug=await page.evaluate(()=>({tasksKey:LS.tasks,
+      keys:Object.keys(localStorage),
+      tasks:JSON.parse(localStorage.getItem('lawyerTasks')||'[]').map(x=>({title:x.title,status:x.status})),
+      formVisible:!!document.querySelector('#taskSheet.show'),
+      formValid:document.getElementById('taskForm').checkValidity(),
+      tab:state.tab,
+      errors:[...document.querySelectorAll('#taskForm :invalid')].map(el=>({name:el.name,msg:el.validationMessage}))
+    }));
+    console.log('TASK_SAVE_DIAGNOSTIC',JSON.stringify(debug));
     const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('lawyerTasks')||'[]'));
     const added=stored.find(x=>x.title==='Проверка нового порядка');
-    assert.ok(added,'preset produces a saved task');
+    assert.ok(added,'preset produces a saved task: '+JSON.stringify(debug));
     assert.equal(added.actionDate,'2026-10-17');
     assert.equal(added.dueDate,'2026-10-21');
     assert.equal(added.waitingFor,'Юридический департамент');
