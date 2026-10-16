@@ -149,3 +149,17 @@ html,body{background:var(--bg)}
   .lin-workspace{overflow-x:clip}
 }
 @media(prefers-reduced-motion:reduce){.lin-toast{transition:none}}
+
+/* Preserve task detail/priority/undo hooks inside the compact Linear rows. */
+.lin-row.workspace-task-row{display:flex!important;grid-template-columns:none!important;align-items:center!important;gap:12px!important;width:100%;box-shadow:none!important;border-radius:0!important;margin:0!important;transform:none!important;min-height:57px!important}
+.lin-row.workspace-task-row::before,.lin-row.workspace-task-row::after{display:none!important}
+.lin-row.workspace-task-row .lin-row-body{flex:1;display:flex;flex-direction:column;min-width:0;align-items:flex-start;width:auto;text-align:left;padding:0;border:0;box-shadow:none;background:transparent}
+.lin-row.workspace-task-row .lin-row-actions{display:flex!important;align-items:center;gap:7px;flex:none;position:static;opacity:1;background:transparent;width:auto;margin:0;padding:0;border:0;min-height:25px}
+.lin-row.workspace-task-row .lin-small-action{display:grid;place-items:center;color:#9298a1;width:27px;height:27px;border-radius:5px;border:0;background:none;padding:0}
+.lin-row.workspace-task-row .lin-small-action:hover{background:#33383b;color:#eef1f0}
+.lin-row.workspace-task-row .lin-small-action .icon{width:15px;height:15px}
+.lin-row.workspace-task-row .lin-restore{display:none}
+.lin-row.workspace-task-row .lin-state{display:grid;place-items:center}
+.lin-row.workspace-task-row [data-done-task]{min-height:19px}
+.lin-row.workspace-task-row .workspace-restore-inline{display:none}
+@media(max-width:760px){.lin-row.workspace-task-row{gap:9px!important;padding:10px 9px!important}.lin-row.workspace-task-row .lin-row-actions{gap:3px}.lin-row.workspace-task-row .lin-small-action{width:24px;height:27px}}
