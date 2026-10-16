@@ -63,7 +63,7 @@ function decorateTasks(){
  }
  const nav=workspace.querySelector('.lin-listbar');
  if(nav&&!workspace.querySelector('.flow-view-select')){
-   const bar=add('div','flow-view-select','<div class="flow-view-selector" aria-label="Представление задач"><button data-flow-view="list" type="button">'+icon('tasks')+' Список</button><button data-flow-view="board" type="button">'+icon('layout-grid')+' Доска</button></div>'+
+   const bar=add('div','flow-view-select','<div class="flow-view-selector" aria-label="Представление задач"><button data-flow-view="list" type="button">'+icon('tasks')+' Список</button><button data-flow-view="board" type="button">'+icon('folder')+' Доска</button></div>'+
      '<span class="flow-view-hint">Задачи сгруппированы по статусу</span>');
    nav.before(bar);
  }
@@ -84,7 +84,7 @@ function decorateTasks(){
    const t=entry.task;
    const main=row.querySelector('.lin-row-body');
    if(!main)continue;
-   const description=(t.nextStep||t.extra||t.waitingFor||'Открыть задачу для деталей').slice(0,150);
+   const description=(t.status==='waiting'&&t.waitingFor?'Ждём: '+t.waitingFor:t.nextStep||t.extra||'Открыть задачу для деталей').slice(0,150);
    const middle=add('span','flow-row-description',esc(description));
    const deadline=add('span','flow-row-deadline','<span class="'+(overdue(t)?'flow-overdue':'')+'">'+esc(formatDate(t.dueDate))+'</span>');
    const pri=add('span','flow-row-priority','<span class="flow-priority-badge flow-priority-'+esc(t.priority)+'">'+esc(priorityLabel(t))+'</span>');
