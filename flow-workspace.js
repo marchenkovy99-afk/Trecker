@@ -51,7 +51,7 @@ function dashboard(){
    ['Активные дела',cnt,'folder']
  ];
  const dateLabel=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
- const header=add('section','flow-dashboard','<div class="flow-daily-intro"><div><span class="flow-eyebrow">МОЙ РАБОЧИЙ ДЕНЬ · '+esc(dateLabel)+'</span><h2>Хорошего рабочего дня</h2><p>Задачи, ближайшие сроки и дела в одном пространстве.</p></div><button type="button" class="flow-daily-add" data-ref-new-task>'+icon('plus')+' Новая задача</button></div><div class="flow-metrics">'+
+ const header=add('section','flow-dashboard','<div class="flow-daily-intro"><div><span class="flow-eyebrow">МОЙ РАБОЧИЙ ДЕНЬ · '+esc(dateLabel)+'</span></div><button type="button" class="flow-daily-add" data-ref-new-task>'+icon('plus')+' Новая задача</button></div><div class="flow-metrics">'+
    stats.map(([label,value,g])=>'<div class="flow-metric"><span class="flow-metric-icon">'+icon(g)+'</span><strong>'+value+'</strong><span>'+esc(label)+'</span></div>').join('')+'</div>');
  target.prepend(header);
  // The old empty waiting panel has already been removed by the existing UI layer.
