@@ -33,6 +33,27 @@ const run=async()=>{
    await page.locator('#task-status').selectOption('inwork');
    await page.locator('#taskForm [type="submit"]').click();
    await page.locator('.lin-row').first().waitFor();
+   // One Cyrillic-capable typeface across navigation, lists, calendar and forms.
+   const assertTypeface=async(selectors,label)=>{
+     const details=await page.evaluate(list=>list.map(selector=>{
+       const element=document.querySelector(selector);
+       if(!element)throw new Error('Missing typography sample: '+selector);
+       const computed=getComputedStyle(element);
+       return {selector,font:computed.fontFamily.replace(/^['"]|['"]$/g,'').split(',')[0].replace(/['"]/g,'').trim(),size:parseFloat(computed.fontSize)};
+     }),selectors);
+     assert.ok(details.every(value=>value.font==='Source Serif 4'),'inconsistent type family '+label+': '+JSON.stringify(details));
+     return details;
+   };
+   let samples=await assertTypeface(['body','.brandname','#tabs [data-tab="tasks"]','.lin-heading h2','.lin-title','.lin-meta','.lin-tool','.lin-primary'],'desktop tasks');
+   assert.ok(samples.find(x=>x.selector==='.brandname').size>=16,'sidebar brand must be legible');
+   assert.ok(samples.find(x=>x.selector==='#tabs [data-tab="tasks"]').size>=14,'sidebar navigation must be legible');
+   assert.ok(samples.find(x=>x.selector==='.lin-meta').size>=12.5,'task metadata must be legible');
+   await page.locator('#tabs [data-tab="today"]').click();
+   await assertTypeface(['.ref-panel-heading h3','.ref-row-main strong'],'Today card');
+   await page.locator('#tabs [data-tab="priorities"]').click();
+   await assertTypeface(['.priority-page-head h2','.priority-day__head strong','.priority-zone h3','.priority-add','.priority-week-actions .btn'],'weekly calendar');
+   await page.locator('#tabs [data-tab="tasks"]').click();
+
    for(const width of [360,390,768,1024,1440,1920]){
      await page.setViewportSize({width,height:900});
      await page.locator('#tabs [data-tab="tasks"]').click();
@@ -71,6 +92,7 @@ const run=async()=>{
    assert.ok(parseFloat(form.font)>=16,'mobile editor must not autozoom');
    assert.ok(parseFloat(form.label)>=12,'mobile editor labels must remain legible');
    assert.ok(form.form<=form.screen+1,'editor bottom-sheet must fit inside mobile viewport: '+JSON.stringify(form));
+   await assertTypeface(['#taskSheetTitle','#task-title','#taskForm label[for="task-title"]','#taskForm [type="submit"]'],'task editor');
    await page.screenshot({path:path.join(shots,'premium-task-form-mobile.png'),fullPage:false});
    await page.keyboard.press('Escape');
    await page.locator('#tabs [data-tab="projects"]').click();
