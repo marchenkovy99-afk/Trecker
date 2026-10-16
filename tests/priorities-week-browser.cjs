@@ -55,6 +55,40 @@ const dayKey=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d
   await page.locator('#tabs [data-tab="tasks"]').click();
   await page.locator('#tabs [data-tab="priorities"]').click();
   assert.equal(await page.locator('.priority-day.is-today').count(),1,'reopening prioritities always selects current week');
+  // Mobile compactness, alignment, and one-touch move to another day.
+  assert.equal(await page.getByText('Неделя приоритетов',{exact:true}).count(),0,'remove duplicate navigation heading');
+  const compact=await page.evaluate(()=>{
+    const board=document.querySelector('.priority-board');
+    const day=document.querySelector('.priority-day.is-today');
+    const title=document.querySelector('.priority-page-head h2');
+    const weekday=day?.querySelector('.priority-day__head strong');
+    const zone=day?.querySelector('.priority-zone--main');
+    const add=zone?.querySelector('.priority-add');
+    const zr=zone?.getBoundingClientRect(),ar=add?.getBoundingClientRect(),dr=day?.getBoundingClientRect();
+    return {heading:parseFloat(getComputedStyle(title).fontSize),
+      weekday:parseFloat(getComputedStyle(weekday).fontSize),height:dr?.height,
+      dayRight:dr?.right,viewport:innerWidth,
+      buttonRight:ar?.right,zoneRight:zr?.right,
+      buttonText:add?.textContent?.trim(),buttonPseudo:getComputedStyle(add,'::before').content,
+      fabVisible:!!document.getElementById('fab')?.getClientRects().length};
+  });
+  assert.ok(compact.heading<=29&&compact.weekday<=24,'compact typography: '+JSON.stringify(compact));
+  assert.ok(compact.height<580,'compact day fits normal phone viewport: '+JSON.stringify(compact));
+  assert.ok(compact.dayRight<=compact.viewport+1,'no clipped day card: '+JSON.stringify(compact));
+  assert.ok(compact.buttonRight<=compact.zoneRight+2,'Add button must fit in day: '+JSON.stringify(compact));
+  assert.equal(compact.buttonText,'+ Добавить','readable, complete Add label');
+  assert.equal(compact.buttonPseudo,'none','do not duplicate plus signs');
+  assert.equal(compact.fabVisible,false,'floating plus must not overlap priority day buttons');
+  const moved=await page.locator('.priority-day.is-today .priority-card:not(.is-done) [data-set-priority]').first();
+  await moved.click();
+  const chips=page.locator('#priorityForm [data-priority-quick-day]');
+  assert.equal(await chips.count(),7,'seven one-touch calendar day choices in the transfer sheet');
+  const currentDay=dayKey(new Date());
+  const otherDay=await chips.evaluateAll(nodes=>nodes.map(n=>n.dataset.priorityQuickDay).find(v=>v!=='${currentDay}')); 
+  assert.ok(otherDay&&otherDay!==currentDay,'choose a different weekday');
+  await page.locator('#priorityForm [data-priority-quick-day="'+otherDay+'"]').click();
+  assert.ok(await page.evaluate(expected=>(JSON.parse(localStorage.getItem('lawyerTasks')||'[]').find(t=>t.title==='Приоритет на сегодняшний день')||{}).priorityDate===expected,otherDay),'quick transfer persists priorityDate to existing root task');
+  assert.equal(await page.locator('#prioritySheet.show').count(),0,'day transfer closes picker');
   const zoom=await page.evaluate(()=>{
     const v=document.querySelector('meta[name=viewport]').content;
     const fields=[...document.querySelectorAll('input:not([type=hidden]),textarea,select')].filter(el=>el.getBoundingClientRect().width>0);
