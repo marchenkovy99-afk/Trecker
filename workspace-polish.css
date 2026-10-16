@@ -1,0 +1,493 @@
+/* Final interaction, mobile layout and accessibility polish. */
+
+html,
+body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+
+button,
+a,
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  touch-action: manipulation;
+}
+
+.workspace-status,
+.workspace-priority,
+.today-status {
+  min-height: 30px;
+  padding-right: 12px;
+  padding-left: 12px;
+  font-size: 11px;
+  line-height: 1.1;
+}
+
+.workspace-task-row .workspace-icon-button {
+  display: none;
+}
+
+.workspace-project-card .drag-handle {
+  position: static !important;
+  inset: auto !important;
+  display: grid !important;
+  width: 44px !important;
+  min-width: 44px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  place-items: center;
+  opacity: .45;
+  transform: none !important;
+  overflow: visible !important;
+}
+
+.workspace-project-card .drag-handle:hover,
+.workspace-project-card .drag-handle:focus-visible {
+  opacity: 1;
+}
+
+.workspace-note-main {
+  display: grid;
+  width: 100%;
+  min-height: 86px;
+  align-content: start;
+  gap: 9px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.workspace-note-main h3,
+.workspace-note-main p {
+  pointer-events: none;
+}
+
+.workspace-restore-inline {
+  white-space: nowrap;
+}
+
+.workspace-restore-detail {
+  white-space: nowrap;
+}
+
+.today-focus-check {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+}
+
+.today-complete,
+.today-panel-heading > button {
+  min-height: 44px;
+}
+
+.today-focus-task {
+  grid-template-columns: 44px minmax(0, 1fr) auto auto;
+}
+
+@media (min-width: 900px) {
+  .fab {
+    display: none;
+  }
+
+  #taskSheet {
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 16px;
+  }
+
+  #taskSheet .sheet {
+    width: min(540px, 46vw);
+    max-height: calc(100vh - 32px);
+    margin: 0;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 899px) {
+  body {
+    padding-top: 0 !important;
+    padding-bottom: calc(96px + var(--safe-bottom)) !important;
+    overflow-x: hidden;
+  }
+
+  .top {
+    min-height: calc(62px + env(safe-area-inset-top));
+    padding-top: calc(8px + env(safe-area-inset-top)) !important;
+    padding-right: 14px !important;
+    padding-bottom: 8px !important;
+    padding-left: 14px !important;
+    overflow: visible !important;
+    background: var(--surface) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    filter: none !important;
+    transform: none !important;
+    perspective: none !important;
+    will-change: auto !important;
+  }
+
+  .brandbar {
+    min-height: 46px;
+    overflow: visible;
+  }
+
+  .brandmark,
+  .sync-button,
+  .theme-toggle {
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .sync-button,
+  .theme-toggle {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+  }
+
+  .sync-button .icon,
+  .theme-toggle .icon {
+    width: 21px;
+    height: 21px;
+    overflow: visible;
+  }
+
+  .tabs {
+    position: fixed !important;
+    top: auto !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    min-height: calc(78px + var(--safe-bottom));
+    padding-top: 10px !important;
+    padding-right: 5px !important;
+    padding-bottom: calc(8px + var(--safe-bottom)) !important;
+    padding-left: 5px !important;
+    overflow: visible !important;
+    align-items: stretch;
+  }
+
+  .tabs.hidden {
+    display: none !important;
+  }
+
+  .tab {
+    min-width: 0;
+    min-height: 60px;
+    padding: 7px 1px 5px !important;
+    overflow: visible !important;
+    line-height: 1.15;
+  }
+
+  .tab .icon {
+    display: block !important;
+    width: 23px !important;
+    min-width: 23px;
+    height: 23px !important;
+    min-height: 23px;
+    flex: 0 0 23px;
+    overflow: visible !important;
+  }
+
+  .tab .count {
+    top: 4px !important;
+    left: calc(50% + 7px) !important;
+    z-index: 2;
+    min-width: 17px !important;
+    height: 17px !important;
+    padding: 0 4px !important;
+    line-height: 13px;
+  }
+
+  .page {
+    overflow-x: hidden;
+  }
+
+  .workspace-page-add,
+  .today-page-header__actions .btn.primary {
+    display: none;
+  }
+
+  .workspace-task-row {
+    grid-template-columns: 44px minmax(0, 1fr) auto !important;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 5px 8px !important;
+    min-height: 100px !important;
+    padding: 10px 9px !important;
+    overflow: visible;
+  }
+
+  .workspace-task-row > .drag-handle,
+  .workspace-task-row__done-mark {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    overflow: visible !important;
+  }
+
+  .workspace-task-row > .drag-handle .drag-grip {
+    display: block;
+    width: 18px;
+    height: 28px;
+    overflow: visible !important;
+    border-radius: 5px;
+    background-image: radial-gradient(circle, currentColor 1.5px, transparent 1.7px);
+    background-position: 0 0;
+    background-size: 9px 9px;
+    color: var(--faint);
+    opacity: .82;
+  }
+
+  .workspace-task-main {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    width: 100%;
+    min-height: 50px;
+    overflow: hidden;
+  }
+
+  .workspace-task-main strong {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .workspace-task-meta {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .workspace-task-row > .workspace-status {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+    max-width: 100% !important;
+    min-height: 32px;
+    padding: 0 13px;
+    overflow: visible !important;
+    font-size: 11px;
+    text-overflow: clip !important;
+  }
+
+  .workspace-task-row .workspace-priority {
+    display: inline-flex !important;
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: end;
+    min-height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    font-size: 11px;
+  }
+
+  .workspace-task-row .workspace-priority:not(.workspace-priority--high):not(.workspace-priority--medium):not(.workspace-priority--low) {
+    background: var(--accent-soft);
+    color: var(--muted);
+  }
+
+  .workspace-task-row .workspace-row-actions {
+    grid-column: 4 !important;
+    grid-row: 1 / span 2 !important;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 48px;
+    min-width: 48px;
+  }
+
+  .workspace-task-row:not(.is-done) .workspace-row-actions {
+    display: none;
+  }
+
+  .workspace-task-row.is-done {
+    grid-template-columns: 44px minmax(0, 1fr) auto 48px !important;
+  }
+
+  .workspace-task-row.is-done .workspace-task-main {
+    grid-column: 2 / 5;
+  }
+
+  .workspace-task-row .workspace-row-actions .btn {
+    display: none;
+  }
+
+  .workspace-task-row.is-done .workspace-row-actions .workspace-restore-inline {
+    display: inline-flex;
+    width: 48px;
+    min-width: 48px;
+    min-height: 36px;
+    padding: 0 4px;
+    border-color: color-mix(in srgb, var(--workspace-accent) 24%, var(--line));
+    border-radius: 9px;
+    background: var(--workspace-accent-soft);
+    color: var(--workspace-accent);
+    font-size: 9.5px;
+  }
+
+  .workspace-task-row .workspace-icon-button {
+    width: 48px;
+    min-width: 48px;
+    height: 44px;
+    min-height: 44px;
+    overflow: visible;
+  }
+
+  .workspace-completed .completed-link,
+  .workspace-utilities summary {
+    min-height: 48px;
+    font-size: 13px;
+  }
+
+  .today-focus-task {
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+  }
+
+  .today-complete {
+    grid-column: 2 / -1;
+  }
+
+  .today-status {
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+
+  input,
+  textarea,
+  select,
+  .search,
+  .field input,
+  .field textarea,
+  .field select,
+  .note-editor,
+  [contenteditable="true"] {
+    font-size: 16px !important;
+  }
+
+  .sheet .field input,
+  .sheet .field textarea,
+  .sheet .field select,
+  .sheet .note-editor {
+    font-size: 16px !important;
+    line-height: 1.4;
+  }
+
+  /* Keep every modal and its primary action above the fixed mobile navigation. */
+  .overlay {
+    z-index: 200;
+  }
+
+  #taskSheet .sheet,
+  #projectSheet .sheet,
+  #noteSheet .sheet,
+  #eventSheet .sheet {
+    display: flex;
+    flex-direction: column;
+    max-height: min(88dvh, calc(100dvh - env(safe-area-inset-top) - 12px));
+    overflow: hidden;
+  }
+
+  #taskSheet .form,
+  #projectSheet .form,
+  #noteSheet .form,
+  #eventSheet .form {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .sheet-fields {
+    display: grid;
+    min-height: 0;
+    gap: 15px;
+    padding: 2px 3px 18px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #taskSheet .task-detail {
+    min-height: 0;
+    padding-right: 3px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sheet-actions {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    padding: 12px 3px 0;
+    border-top: 1px solid var(--line);
+    background: var(--surface-raised);
+  }
+}
+
+@media (max-width: 520px) {
+  .brandname {
+    max-width: min(46vw, 190px) !important;
+  }
+
+  .workspace-summary-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .workspace-summary-item {
+    min-height: 70px;
+    padding: 9px 7px;
+  }
+
+  .workspace-summary-item span {
+    overflow: hidden;
+    font-size: 9.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .workspace-project-card__top,
+  .workspace-note-card__top {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 390px) {
+  .tab {
+    font-size: 9px !important;
+  }
+
+  .workspace-task-row {
+    grid-template-columns: 42px minmax(0, 1fr) auto !important;
+    padding-right: 7px !important;
+    padding-left: 7px !important;
+  }
+
+  .workspace-task-row.is-done {
+    grid-template-columns: 42px minmax(0, 1fr) auto 44px !important;
+  }
+
+  .workspace-task-row .workspace-row-actions,
+  .workspace-task-row .workspace-icon-button,
+  .workspace-task-row.is-done .workspace-row-actions .workspace-restore-inline {
+    width: 44px;
+    min-width: 44px;
+  }
+}

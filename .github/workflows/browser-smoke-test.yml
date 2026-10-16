@@ -1,0 +1,52 @@
+name: Reference design and behavior checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Storage, ordering and cloud regression checks
+        run: |
+          node tests/smoke.cjs
+          node tests/sync.cjs
+          node tests/sync-recovery.cjs
+          node tests/calendar-cloud-bridge.cjs
+      - name: Prepare browser test runner
+        run: npm install --prefix "$RUNNER_TEMP/tracker-test-deps" --ignore-scripts --no-audit --no-fund playwright@1.51.1
+      - name: Check user actions and seven responsive widths
+        run: |
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME"
+          NODE_PATH="$RUNNER_TEMP/tracker-test-deps/node_modules" TEST_BROWSER_EXECUTABLE="$CHROME" TEST_SCREENSHOT_DIR="$RUNNER_TEMP/reference-qa" node tests/reference-workspace.cjs
+      - name: Upload actual interface screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reference-design-screenshots
+          path: ${{ runner.temp }}/reference-qa/*.png
+          if-no-files-found: warn
+          retention-days: 7
+
+  cloud-endpoints:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Read-only checks of existing cloud endpoints
+        run: node tests/cloud-endpoints.cjs

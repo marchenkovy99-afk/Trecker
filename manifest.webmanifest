@@ -1,0 +1,25 @@
+{
+  "name": "Трекер юриста",
+  "short_name": "Трекер",
+  "description": "Дела, задачи, заключения и календарь юриста",
+  "lang": "ru",
+  "start_url": "./?source=pwa&v=20261013-dark-reference",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#17191c",
+  "theme_color": "#17191c",
+  "icons": [
+    {
+      "src": "tracker-icon-graphite-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "tracker-icon-graphite-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
