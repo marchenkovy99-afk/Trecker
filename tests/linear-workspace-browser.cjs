@@ -23,7 +23,7 @@ const server=http.createServer(async(req,res)=>{
     await page.locator('#tabs [data-tab="tasks"]').click();
     await page.locator('.lin-workspace').waitFor();
     assert.equal(await page.locator('.lin-group').count(),4,'tasks grouped by status');
-    await page.locator('[data-lin-templates]').click();
+    await page.locator('.lin-toolbar [data-lin-templates]').click();
     await page.locator('[data-lin-preset="opinion"]').click();
     await page.locator('#task-title').waitFor();
     assert.match(await page.locator('#task-title').inputValue(),/заключен/i);
@@ -45,7 +45,7 @@ const server=http.createServer(async(req,res)=>{
     assert.equal(added.nextStep,'Получить комментарии коллег');
     await page.locator('.lin-filters [data-lin-filter="waiting"]').click();
     assert.match(await page.locator('.lin-workspace').innerText(),/Юридический департамент/);
-    await page.locator('[data-lin-history]').click();
+    await page.locator('.lin-toolbar [data-lin-history]').click();
     assert.match(await page.locator('#linHistoryDialog').innerText(),/История/i);
     await page.locator('[data-lin-close-history]').click();
     await page.setViewportSize({width:390,height:844});
