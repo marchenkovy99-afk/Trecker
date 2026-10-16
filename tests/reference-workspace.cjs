@@ -50,7 +50,7 @@ const test = async () => {
     assert.equal(await page.locator('#tabs [aria-selected="true"]').getAttribute('data-tab'),name,'active navigation must match the opened screen');
   };
   const openCase = async () => {await tab('projects');await page.locator('[data-ref-case]').first().click();};
-  const noOverflow = async () => assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'page must not overflow horizontally');
+  const noOverflow = async () => {const dim=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,tab:document.querySelector('#tabs [aria-selected="true"]')?.dataset.tab,over:[...document.querySelectorAll('body *')].filter(x=>x.getBoundingClientRect().right>innerWidth+2&&!x.hidden&&getComputedStyle(x).position!=='fixed').slice(0,5).map(x=>({class:x.className?.baseVal||x.className,tag:x.tagName,right:Math.round(x.getBoundingClientRect().right)}))}));assert.ok(dim.scroll<=dim.width+1,'page must not overflow horizontally '+JSON.stringify(dim));};
   const close = async () => {await page.keyboard.press('Escape');};
   await fs.mkdir(screenshotDir,{recursive:true});
   try {
