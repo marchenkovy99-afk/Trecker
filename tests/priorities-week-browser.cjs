@@ -89,6 +89,27 @@ const dayKey=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d
   await page.locator('#priorityForm [data-priority-quick-day="'+otherDay+'"]').click();
   assert.ok(await page.evaluate(expected=>(JSON.parse(localStorage.getItem('lawyerTasks')||'[]').find(t=>t.title==='Приоритет на сегодняшний день')||{}).priorityDate===expected,otherDay),'quick transfer persists priorityDate to existing root task');
   assert.equal(await page.locator('#prioritySheet.show').count(),0,'day transfer closes picker');
+  for(const width of [320,360,390,430]){
+    await page.setViewportSize({width,height:844});
+    await page.locator('#tabs [data-tab="tasks"]').click();
+    await page.locator('#tabs [data-tab="priorities"]').click();
+    const measure=await page.evaluate(()=>{
+      const day=document.querySelector('.priority-day.is-today'),board=document.querySelector('.priority-board');
+      const zone=day?.querySelector('.priority-zone--main'),button=zone?.querySelector('.priority-add');
+      const card=day?.getBoundingClientRect(),container=board?.getBoundingClientRect(),slot=zone?.getBoundingClientRect(),add=button?.getBoundingClientRect();
+      return {screen:innerWidth,scroll:document.documentElement.scrollWidth,
+        dayLeft:card?.left,dayRight:card?.right,boardLeft:container?.left,boardRight:container?.right,
+        addLeft:add?.left,addRight:add?.right,slotLeft:slot?.left,slotRight:slot?.right,
+        dayHeight:card?.height,buttonWidth:add?.width,
+        typeSize:parseFloat(getComputedStyle(document.querySelector('.priority-day__head strong')).fontSize)};
+    });
+    assert.ok(measure.scroll<=width+1,'mobile screen width '+width+': '+JSON.stringify(measure));
+    assert.ok(measure.dayLeft>=measure.boardLeft-5&&measure.dayRight<=measure.boardRight+2,'day inside carousel '+width+': '+JSON.stringify(measure));
+    assert.ok(measure.addLeft>=measure.slotLeft-2&&measure.addRight<=measure.slotRight+2,'Add button within zone '+width+': '+JSON.stringify(measure));
+    assert.ok(measure.dayHeight<580&&measure.typeSize<=24,'day card remains compact '+width+': '+JSON.stringify(measure));
+    assert.ok(measure.buttonWidth>=74,'Add control stays tappable '+width+': '+JSON.stringify(measure));
+    await page.screenshot({path:path.join(dir,'weekly-priorities-compact-'+width+'.png'),fullPage:false});
+  }
   const zoom=await page.evaluate(()=>{
     const v=document.querySelector('meta[name=viewport]').content;
     const fields=[...document.querySelectorAll('input:not([type=hidden]),textarea,select')].filter(el=>el.getBoundingClientRect().width>0);
